@@ -1,0 +1,133 @@
+// mat_a: row major matrix ( real components followed by imaginary components)
+// mat_b: row major matrix ( real components followed by imaginary components)
+// mat_num_row: number of rows in matrix, Assumption: mat_a and mat_b are square matrices-> number of rows=number of columns
+// mat_out: output matrix also row major order (real components followed by imaginary components)
+// how to use the module: 
+// set the input values->raise valid signal for one clock period->raise start signal for the next clock period
+// ->wait for the done signal to be raised to read the output
+module mat_mult_complex
+#(parameter mat_num_row=2)(
+    input clk,
+    input rst,
+    input start,
+    input valid,
+    input [2*64*mat_num_row*mat_num_row-1:0] mat_a,
+    input [2*64*mat_num_row*mat_num_row-1:0] mat_b,
+    output reg [2*64*mat_num_row*mat_num_row-1:0] mat_out,
+    output reg done);
+
+    reg[2:0] state;
+    // reg[63:0] a_real_local[mat_num_row*mat_num_row-1:0]; // a has to be rearranged in row major order
+    // reg[63:0] a_imag_local[mat_num_row*mat_num_row-1:0];
+    // reg[63:0] b_real_local[mat_num_row*mat_num_row-1:0]; // b has to be rearranged in column major order
+    // reg[63:0] b_imag_local[mat_num_row*mat_num_row-1:0];
+    // reg[63:0] out_real_local[mat_num_row*mat_num_row-1:0];
+    // reg[63:0] out_imag_local[mat_num_row*mat_num_row-1:0];
+
+    reg[64*mat_num_row*mat_num_row-1:0] a_real_local; // a has to be rearranged in row major order
+    reg[64*mat_num_row*mat_num_row-1:0] a_imag_local;
+    reg[64*mat_num_row*mat_num_row-1:0] b_real_local; // b has to be rearranged in column major order
+    reg[64*mat_num_row*mat_num_row-1:0] b_imag_local;
+    reg[64*mat_num_row*mat_num_row-1:0] out_real_local;
+    reg[64*mat_num_row*mat_num_row-1:0] out_imag_local;
+
+    reg[$clog2(mat_num_row):0] count;
+    reg[$clog2(mat_num_row):0] rindex;
+    reg[$clog2(mat_num_row):0] cindex;
+    reg[mat_num_row*mat_num_row-1:0] done_vecMult;
+    reg[mat_num_row*mat_num_row-1:0] start_vecMult;
+    reg[mat_num_row*mat_num_row-1:0] valid_vecMult;
+    reg[mat_num_row*mat_num_row-1:0] out_read_ack_vecMult;
+    
+    genvar i,j;
+    generate
+        for(i=0;i<mat_num_row;i=i+1) begin : name_block_1
+            for(j=0;j<mat_num_row;j=j+1) begin : name_block_2
+                vec_mult_acc#(.mat_add_gen(mat_num_row))
+                 m0(clk,rst,
+                 start_vecMult[i*mat_num_row+j], valid_vecMult[i*mat_num_row+j],
+                 a_real_local[(64*i*mat_num_row)+:64*mat_num_row],
+                 a_imag_local[(64*i*mat_num_row)+:64*mat_num_row],
+                 b_real_local[(64*j*mat_num_row)+:64*mat_num_row],
+                 b_imag_local[(64*j*mat_num_row)+:64*mat_num_row],
+                 out_read_ack_vecMult[i*mat_num_row+j],
+                 out_real_local[64*(i*mat_num_row+j)+:64],
+                 out_imag_local[64*(i*mat_num_row+j)+:64],
+                 done_vecMult[i*mat_num_row+j]);
+                 assign b_real_local[64*(j*mat_num_row+i)+:64]=mat_b[64*(i*mat_num_row+j) +:64]; // rearrange the input into separate real and imaginary vectors
+                 assign b_imag_local[64*(j*mat_num_row+i)+:64]=mat_b[64*(i*mat_num_row+j)+(64*mat_num_row*mat_num_row)+:64];
+
+            end
+        end
+
+    endgenerate
+
+    assign a_real_local = mat_a[mat_num_row*64*mat_num_row-1:0];// rearrange the input into separate real and imaginary vectors
+    assign a_imag_local = mat_a[2*64*mat_num_row*mat_num_row-1:mat_num_row*64*mat_num_row];
+
+
+    always@(posedge clk)
+    begin
+        if(rst==1) begin
+        // a_real_local<=0;
+        // a_imag_local<=0;
+        // b_real_local<=0;
+        // b_imag_local<=0;
+        count<=0;
+        state<=0;
+        valid_vecMult<={(mat_num_row*mat_num_row){1'b0}};
+        start_vecMult<={(mat_num_row*mat_num_row){1'b0}};
+        done<=0;
+        out_read_ack_vecMult<={(mat_num_row*mat_num_row){1'b0}};
+        end
+        else begin
+        case(state)
+        0: // if the inputs are valid, feed them to the vec_mult_acc modules
+        begin
+            done<=0;
+            if(valid==1) begin 
+                valid_vecMult<={(mat_num_row*mat_num_row){1'b1}};
+                if(start==1) begin 
+                state<=1;
+                end
+                else begin
+                state<=0;
+                end
+
+            end
+            else begin
+                valid_vecMult<={(mat_num_row*mat_num_row){1'b0}};
+                out_read_ack_vecMult<={(mat_num_row*mat_num_row){1'b0}};
+                state<=0;
+            end
+        end
+        1: // if the start command is given, start the vec_mult_acc modules' computation
+        begin
+            if(start==1) begin
+            start_vecMult<={(mat_num_row*mat_num_row){1'b1}};
+            state<=2;
+            end
+            else begin
+                start_vecMult<={(mat_num_row*mat_num_row){1'b0}};
+                state<=1; // if start command is not given wait in this state;
+            end
+        end
+        2: // wait for the vec_mult_acc modules' computation to be done
+        begin
+            if(done_vecMult=={(mat_num_row*mat_num_row){1'b1}}) begin
+            mat_out[mat_num_row*64*mat_num_row-1:0]<=out_real_local;
+            mat_out[2*64*mat_num_row*mat_num_row-1:mat_num_row*64*mat_num_row]<=out_imag_local;
+            out_read_ack_vecMult<={(mat_num_row*mat_num_row){1'b1}};
+            start_vecMult<={(mat_num_row*mat_num_row){1'b0}};
+            valid_vecMult<={(mat_num_row*mat_num_row){1'b0}};
+            done<=1;
+            state<=0;
+            end
+            else begin
+                state<=2;
+            end
+        end
+        endcase
+        end
+    end
+endmodule
