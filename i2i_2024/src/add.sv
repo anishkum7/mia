@@ -16,7 +16,7 @@ module add
   // Output signals
   output logic [WIDTH-1:0]                  result_o,
   output fpnew_pkg::status_t                status_o,
-  output TagType                            tag_o,
+  output logic                            tag_o,
   // Output handshake
   output logic                              out_valid_o,
   input  logic                              out_ready_i,
@@ -26,19 +26,19 @@ module add
 );
     
     fpnew_pkg::roundmode_e              rnd_mode_i;
-    assign rnd_mode_i = RNE;
+    assign rnd_mode_i = fpnew_pkg::RNE;
     
     fpnew_pkg::operation_e              op_i;
-    assign op_i = ADD;
+    assign op_i = fpnew_pkg::ADD;
         
     logic                               op_mod_i;
     assign op_mod_i = 0;
     
     fpnew_pkg::fp_format_e              src_fmt_i;
-    src_fmt_i = FP64;
+    src_fmt_i = fpnew_pkg::FP64;
 
     fpnew_pkg::fp_format_e              dst_fmt_i;
-    dst_fmt_i = FP64;
+    dst_fmt_i = fpnew_pkg::FP64;
     
     //fpnew_pkg::int_format_e             int_fmt_i;
     // logic                               vectorial_op_i;
