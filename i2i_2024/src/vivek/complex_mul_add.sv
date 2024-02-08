@@ -36,7 +36,14 @@ fpnew_top
                         IntFmtMask:    4'b0000
                     }
                     ),
-  .Implementation ( fpnew_pkg::ADD_MUL_ONLY ),
+  .Implementation ( '{
+                        PipeRegs:   '{default: 0},
+                        UnitTypes:  '{'{default: PARALLEL}, // ADDMUL
+                                    '{default: DISABLED},   // DIVSQRT
+                                    '{default: DISABLED}, // NONCOMP
+                                    '{default: DISABLED}},  // CONV
+                        PipeConfig: BEFORE
+                    }),
   .TagType        ( logic                     ),
   .PulpDivsqrt    ( 1'b1                      )
 ) 
