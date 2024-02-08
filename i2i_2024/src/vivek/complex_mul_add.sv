@@ -44,7 +44,7 @@ mul_add0
 (
   .clk_i(clk_i),
   .rst_ni(rst_ni),
-  .operands_i({{128'b0},{operands_i[1],operands_i[3]},{operands_i[0],operands_i[2]}}),
+  .operands_i({{128'b0},{operands_i[3],operands_i[2]},{operands_i[1],operands_i[0]}}),
   .rnd_mode_i(fpnew_pkg::RNE),
   .op_i(fpnew_pkg::MUL),
   .op_mod_i(1'b0),
