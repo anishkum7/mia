@@ -34,7 +34,7 @@ fpnew_top
                         EnableNanBox:  1'b1,
                         FpFmtMask:     5'b01000,
                         IntFmtMask:    4'b0000
-                    };
+                    }
                     ),
   .Implementation ( fpnew_pkg::ADD_MUL_ONLY ),
   .TagType        ( logic                     ),
