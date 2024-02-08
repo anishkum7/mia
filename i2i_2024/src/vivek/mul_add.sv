@@ -1,4 +1,4 @@
-module add 
+module mul_add 
 #(
     parameter NUM_OPERANDS = 3,
                 WIDTH = 64
@@ -16,7 +16,7 @@ module add
   // Output signals
   output logic [WIDTH-1:0]                  result_o,
   output fpnew_pkg::status_t                status_o,
-  output logic                            tag_o,
+  //output logic                              tag_o,
   // Output handshake
   output logic                              out_valid_o,
   input  logic                              out_ready_i,
@@ -71,7 +71,7 @@ fpnew_top #(
   .flush_i(flush_i),
   .result_o(result_o),
   .status_o(status_o),
-  .tag_o(tag_o),
+  //.tag_o(tag_o),
   .out_valid_o(out_valid_o),
   .out_ready_i(out_ready_i),
   .busy_o(busy_o)
