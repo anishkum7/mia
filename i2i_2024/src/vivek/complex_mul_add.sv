@@ -38,10 +38,10 @@ fpnew_top
                     ),
   .Implementation ( '{
                         PipeRegs:   '{default: 0},
-                        UnitTypes:  '{'{default: PARALLEL}, // ADDMUL
-                                    '{default: DISABLED},   // DIVSQRT
-                                    '{default: DISABLED}, // NONCOMP
-                                    '{default: DISABLED}},  // CONV
+                        UnitTypes:  '{'{default: fpnew_pkg::PARALLEL}, // ADDMUL
+                                    '{default: fpnew_pkg::DISABLED},   // DIVSQRT
+                                    '{default: fpnew_pkg::DISABLED}, // NONCOMP
+                                    '{default: fpnew_pkg::DISABLED}},  // CONV
                         PipeConfig: BEFORE
                     }),
   .TagType        ( logic                     ),
