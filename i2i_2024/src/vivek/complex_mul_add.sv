@@ -42,7 +42,7 @@ fpnew_top
                                     '{default: fpnew_pkg::DISABLED},   // DIVSQRT
                                     '{default: fpnew_pkg::DISABLED}, // NONCOMP
                                     '{default: fpnew_pkg::DISABLED}},  // CONV
-                        PipeConfig: BEFORE
+                        PipeConfig: fpnew_pkg::BEFORE
                     }),
   .TagType        ( logic                     ),
   .PulpDivsqrt    ( 1'b1                      )
