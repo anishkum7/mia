@@ -35,10 +35,10 @@ module add
     assign op_mod_i = 0;
     
     fpnew_pkg::fp_format_e              src_fmt_i;
-    src_fmt_i = fpnew_pkg::FP64;
+    assign src_fmt_i = fpnew_pkg::FP64;
 
     fpnew_pkg::fp_format_e              dst_fmt_i;
-    dst_fmt_i = fpnew_pkg::FP64;
+    assign dst_fmt_i = fpnew_pkg::FP64;
     
     //fpnew_pkg::int_format_e             int_fmt_i;
     // logic                               vectorial_op_i;
