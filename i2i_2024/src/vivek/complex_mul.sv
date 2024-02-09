@@ -1,4 +1,4 @@
-module complex_mul_add
+module complex_mul
 // #(
 //     localparam
 // )
