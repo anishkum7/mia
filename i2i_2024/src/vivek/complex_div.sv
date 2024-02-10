@@ -104,7 +104,7 @@ mul_add0
 (
   .clk_i(clk_i),
   .rst_ni(rst_ni),
-  .operands_i({63'b0,a2,a2}),
+  .operands_i({64'b0,a2,a2}),
   .rnd_mode_i(fpnew_pkg::RNE),
   .op_i(fpnew_pkg::MUL),
   .op_mod_i(1'b0),
@@ -184,7 +184,7 @@ fpnew_top
   .Implementation ( '{
                         PipeRegs:   '{default: 0},
                         UnitTypes:  '{'{default: fpnew_pkg::DISABLED}, // ADDMUL
-                                    '{default: fpnew_pkg::PARALLEL},   // DIVSQRT
+                                    '{default: fpnew_pkg::MERGED},   // DIVSQRT
                                     '{default: fpnew_pkg::DISABLED}, // NONCOMP
                                     '{default: fpnew_pkg::DISABLED}},  // CONV
                         PipeConfig: fpnew_pkg::BEFORE
@@ -196,7 +196,7 @@ div
 (
   .clk_i(clk_i),
   .rst_ni(rst_ni),
-  .operands_i({{127'b0},{mul_add1_result_o,mul_add1_result_o},{complex_mul_result_o}}),
+  .operands_i({{128'b0},{mul_add1_result_o,mul_add1_result_o},{complex_mul_result_o}}),
   .rnd_mode_i(fpnew_pkg::RNE),
   .op_i(fpnew_pkg::DIV),
   .op_mod_i(1'b0),
