@@ -36,7 +36,7 @@ flush_i = 0;
 rst_ni = 0;
 in_valid_i = 1;
 out_ready_i = 1;
-#100
+#1000
 $display("Answer : %x  %x",result_o[1], result_o[0]);
 $finish;
 end
