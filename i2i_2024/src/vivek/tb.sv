@@ -21,11 +21,13 @@ logic                              out_valid_o;
 logic                              out_ready_i;
   // Indication of valid data in flight
 logic                              busy_o;
+logic test;
 
 initial clk_i = 0;
 always #5 clk_i = ~clk_i;
 
 initial begin
+test = 0;
 rst_ni = 0;
 in_valid_i = 0;
 out_ready_i = 0;
@@ -40,6 +42,7 @@ in_valid_i = 1;
 out_ready_i = 1;
 wait(out_valid_o == 1'b1);
 @(negedge clk_i);
+test = 1;
 $display("Answer : %x  %x",result_o[1], result_o[0]);
 #1000
 $finish;
