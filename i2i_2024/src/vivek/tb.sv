@@ -38,7 +38,7 @@ flush_i = 0;
 rst_ni = 1;
 in_valid_i = 1;
 out_ready_i = 1;
-@(posedge out_valid_o);
+wait(out_valid_o == 1'b1);
 $display("Answer : %x  %x",result_o[1], result_o[0]);
 #1000
 $finish;
