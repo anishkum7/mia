@@ -26,14 +26,14 @@ initial clk_i = 0;
 always #5 clk_i = ~clk_i;
 
 initial begin
-rst_ni = 1;
+rst_ni = 0;
 operands_i[0] = 64'h4008000000000000;
 operands_i[1] = 64'h4010000000000000;
 operands_i[2] = 64'h4008000000000000;
 operands_i[3] = 64'h4010000000000000;
 flush_i = 0;
-#15
-rst_ni = 0;
+#35
+rst_ni = 1;
 in_valid_i = 1;
 out_ready_i = 1;
 #1000
