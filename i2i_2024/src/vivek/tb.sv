@@ -27,6 +27,8 @@ always #5 clk_i = ~clk_i;
 
 initial begin
 rst_ni = 0;
+in_valid_i = 0;
+out_ready_i = 0;
 operands_i[0] = 64'h4008000000000000;
 operands_i[1] = 64'h4010000000000000;
 operands_i[2] = 64'h4008000000000000;

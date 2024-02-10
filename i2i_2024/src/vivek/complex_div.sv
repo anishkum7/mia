@@ -196,7 +196,7 @@ div
 (
   .clk_i(clk_i),
   .rst_ni(rst_ni),
-  .operands_i({{128'b0},{mul_add1_result_o,mul_add1_result_o},{complex_mul_result_o}}),
+  .operands_i({{complex_mul_result_o},{mul_add1_result_o,mul_add1_result_o},{complex_mul_result_o}}),
   .rnd_mode_i(fpnew_pkg::RNE),
   .op_i(fpnew_pkg::DIV),
   .op_mod_i(1'b0),
