@@ -38,8 +38,9 @@ flush_i = 0;
 rst_ni = 1;
 in_valid_i = 1;
 out_ready_i = 1;
-#1000
+@(posedge out_valid_o)
 $display("Answer : %x  %x",result_o[1], result_o[0]);
+#1000
 $finish;
 end
 
