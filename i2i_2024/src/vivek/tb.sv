@@ -29,10 +29,10 @@ initial begin
 rst_ni = 0;
 in_valid_i = 0;
 out_ready_i = 0;
-operands_i[0] = 64'h4008000000000000;
-operands_i[1] = 64'h4008000000000000;
-operands_i[2] = 64'h4010000000000000;
-operands_i[3] = 64'h4010000000000000;
+operands_i[0] = 64'h401c000000000000;
+operands_i[1] = 64'h4000000000000000;
+operands_i[2] = 64'h3ff0000000000000;
+operands_i[3] = 64'h4000000000000000;
 flush_i = 0;
 #35
 rst_ni = 1;
