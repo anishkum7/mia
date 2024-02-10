@@ -182,7 +182,7 @@ fpnew_top
                     }
                     ),
   .Implementation ( '{
-                        PipeRegs:   '{default: 0},
+                        PipeRegs:   '{default: 1},
                         UnitTypes:  '{'{default: fpnew_pkg::DISABLED}, // ADDMUL
                                     '{default: fpnew_pkg::MERGED},   // DIVSQRT
                                     '{default: fpnew_pkg::DISABLED}, // NONCOMP
