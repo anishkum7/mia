@@ -42,7 +42,7 @@ $finish;
 end
 
 
-complex_mul_add 
+complex_div 
 // #(
 // .NUM_OPERANDS(3),
 // .WIDTH(64)
