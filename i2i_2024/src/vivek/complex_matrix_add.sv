@@ -54,7 +54,7 @@ complex_add
 .flush_i(flush_i),
 .sub(sub),
   // Output signals
-.result_o(result_o[i]),
+.result_o({result_o[i+1], result_o[i]}),
 //.status_o(status_o),
   // Output handshake
 .out_valid_o(complex_add_out_valid_o[i]),
