@@ -14,7 +14,7 @@ logic                              in_ready_o;
 logic                              flush_i;
 logic [SIZE*NUM_OPERANDS-1:0][WIDTH-1:0] operands_i;
   // Output signals
-logic [SIZE-1:0][WIDTH-1:0]             result_o;
+logic [2*SIZE-1:0][WIDTH-1:0]             result_o;
 fpnew_pkg::status_t                status_o;
 logic                             tag_o;
   // Output handshake
@@ -50,7 +50,7 @@ out_ready_i = 1;
 wait(out_valid_o == 1'b1);
 @(negedge clk_i);
 for (int i=0; i<SIZE; i=i+1) begin
-  $display("Answer %d : %x  %x", i, result_o[i+1], result_o[i]);
+  $display("Answer %d : %x  %x", i, result_o[2*i+1], result_o[2*i]);
 end
 #1000
 $finish;
