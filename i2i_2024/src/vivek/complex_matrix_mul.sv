@@ -187,7 +187,7 @@ final_add
 .out_valid_o(out_valid_o),
 .out_ready_i(out_ready_i),
   // Indication of valid data in flight
-.busy_o(complex_add1_busy_o[i])
+.busy_o(busy_o)
 );
 
 
