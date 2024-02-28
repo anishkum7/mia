@@ -1,4 +1,4 @@
-module tb;
+module tb_matrix;
 
 localparam NUM_OPERANDS=4,
             WIDTH = 64,
