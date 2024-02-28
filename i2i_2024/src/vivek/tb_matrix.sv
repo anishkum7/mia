@@ -57,7 +57,7 @@ $finish;
 end
 
 
-complex_matrix_add 
+complex_matrix_mul 
 // #(
 // .NUM_OPERANDS(3),
 // .WIDTH(64)
@@ -73,7 +73,7 @@ DUT
 .result_o(result_o),
 //.status_o(status_o),
 //.tag_o(tag_o),
-.sub(sub),
+//.sub(sub),
 .out_valid_o(out_valid_o),
 .out_ready_i(out_ready_i),
 .busy_o(busy_o)
