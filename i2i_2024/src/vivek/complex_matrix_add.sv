@@ -45,7 +45,7 @@ complex_add
 complex_add
 (
 .clk_i(clk_i),
-.rst_ni(rst_i),
+.rst_ni(rst_ni),
   // Input signals
 .operands_i({operands_i[4*i+3],operands_i[4*i+2],operands_i[4*i+1],operands_i[4*i]}), // {b2,a2,b1,a1}
   // Input Handshake
@@ -54,7 +54,7 @@ complex_add
 .flush_i(flush_i),
 .sub(sub),
   // Output signals
-.result_o({result_o[i+1], result_o[i]}),
+.result_o({result_o[2*i+1], result_o[i]}),
 //.status_o(status_o),
   // Output handshake
 .out_valid_o(complex_add_out_valid_o[i]),
