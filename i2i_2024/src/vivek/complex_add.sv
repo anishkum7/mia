@@ -63,7 +63,7 @@ mul_add0
 (
   .clk_i(clk_i),
   .rst_ni(rst_ni),
-  .operands_i({{128'b0},{b2,a2},{b1,a1}}),
+  .operands_i({{b2,a2},{b1,a1},{128'b0}}),
   .rnd_mode_i(fpnew_pkg::RNE),
   .op_i(fpnew_pkg::ADD),
   .op_mod_i(sub),
