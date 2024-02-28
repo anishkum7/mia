@@ -46,6 +46,7 @@ logic [SIZE/8-1:0] complex_add2_busy_o;
 logic [2*(SIZE/8)-1:0][63:0] complex_add2_result_o;
 
 logic complex_addfinal_in_ready_o;
+logic complex_addfinal_busy_o;
 // logic complex_add2_in_ready_o;
 // logic complex_add2_out_valid_o;
 // logic complex_add2_busy_o;
@@ -187,7 +188,7 @@ final_add
 .out_valid_o(out_valid_o),
 .out_ready_i(out_ready_i),
   // Indication of valid data in flight
-.busy_o(busy_o)
+.busy_o(complex_addfinal_busy_o)
 );
 
 
