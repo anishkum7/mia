@@ -203,7 +203,6 @@ complex_mul
 .in_valid_i(in_valid_i),
 .in_ready_o(complex_mul_in_ready_o[i]),
 .flush_i(flush_i),
-.sub(sub),
   // Output signals
 .result_o({complex_mul_result_o[2*i+1], complex_mul_result_o[2*i]}),
 //.status_o(status_o),
