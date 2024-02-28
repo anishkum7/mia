@@ -14,9 +14,8 @@ module complex_matrix_mul
   input  logic                              in_valid_i,
   output logic                              in_ready_o,
   input  logic                              flush_i,
-  input  logic                              sub,
   // Output signals
-  output logic [1:0][63:0]           result_o,
+  output logic [1:0][63:0]                  result_o,
   //output fpnew_pkg::status_t                status_o,
   // Output handshake
   output logic                              out_valid_o,
@@ -60,7 +59,7 @@ logic [SIZE-1:0] complex_mul_busy_o;
 logic [SIZE*2-1:0][63:0] complex_mul_result_o;
 ;
 assign in_ready_o = &complex_mul_in_ready_o;
-assign busy_o = (&complex_add0_busy_o) & (&complex_add1_busy_o) & (&complex_add2_busy_o) ;
+assign busy_o = (&complex_add0_busy_o) & (&complex_add1_busy_o) & (&complex_add2_busy_o) & complex_addfinal_busy_o & (&complex_mul_busy_o);
 
 genvar i, j;
 
