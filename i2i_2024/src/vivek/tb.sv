@@ -22,10 +22,14 @@ logic                              out_ready_i;
   // Indication of valid data in flight
 logic                              busy_o;
 
+logic                              sub;
+
+
 initial clk_i = 0;
 always #5 clk_i = ~clk_i;
 
 initial begin
+sub = 1;
 rst_ni = 0;
 in_valid_i = 0;
 out_ready_i = 0;
@@ -46,7 +50,7 @@ $finish;
 end
 
 
-complex_div 
+complex_add 
 // #(
 // .NUM_OPERANDS(3),
 // .WIDTH(64)
@@ -62,6 +66,7 @@ DUT
 .result_o(result_o),
 .status_o(status_o),
 //.tag_o(tag_o),
+.sub(sub),
 .out_valid_o(out_valid_o),
 .out_ready_i(out_ready_i),
 .busy_o(busy_o)
