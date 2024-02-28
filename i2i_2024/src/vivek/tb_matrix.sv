@@ -71,7 +71,7 @@ DUT
 .flush_i(flush_i),
 .operands_i(operands_i),
 .result_o(result_o),
-.status_o(status_o),
+//.status_o(status_o),
 //.tag_o(tag_o),
 .sub(sub),
 .out_valid_o(out_valid_o),
