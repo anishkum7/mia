@@ -39,21 +39,21 @@ real expected_real, expected_imaginary;
 initial begin
   expected_real = 0;
   expected_imaginary = 0;
-
+  real a,b,c,d;
   for (int i=0; i<SIZE; i=i+1) begin
-    real a = $itor($urandom_range(0,2000));
+    a = $itor($urandom_range(0,2000));
     a = (a-1000)/100;
     Vector1real[i] = $realtobits(a);
 
-    real b = $itor($urandom_range(0,2000));
+    b = $itor($urandom_range(0,2000));
     b = (b-1000)/100;
     Vector1imaginary[i] = $realtobits(b);
 
-    real c = $itor($urandom_range(0,2000));
+    c = $itor($urandom_range(0,2000));
     c = (c-1000)/100;
     Vector2real[i] = $realtobits(c);
 
-    real d = $itor($urandom_range(0,2000));
+    d = $itor($urandom_range(0,2000));
     d = (d-1000)/100;
     Vector2imaginary[i] = $realtobits(d);            
 
