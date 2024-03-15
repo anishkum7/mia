@@ -35,11 +35,12 @@ logic [SIZE-1:0][WIDTH-1:0] Vector2real, Vector2imaginary;
 // assign Vector2imaginary = {{64'hc0554086e272811a}, {64'h405372a4015ea43e}, {64'h4049d0d943003c5c}, {64'hc040d607d2366e5e}, {64'hc01e89339be57590}, {64'h4043cb45c198e79c}, {64'hc0369013e9261e28}, {64'hc04bc3ca2d3d1d92}, {64'hc03202bb724a3b2c}, {64'h4044d82702477df0}, {64'hc04e639dabc90e08}, {64'h404186a78538af88}, {64'h4052c949a13dd494}, {64'h40571615914189d8}, {64'h404d3d7ce38ad988}, {64'hc046408306d797f4}};
 
 real expected_real, expected_imaginary;
+real a,b,c,d;
 
 initial begin
   expected_real = 0;
   expected_imaginary = 0;
-  real a,b,c,d;
+  
   for (int i=0; i<SIZE; i=i+1) begin
     a = $itor($urandom_range(0,2000));
     a = (a-1000)/100;
