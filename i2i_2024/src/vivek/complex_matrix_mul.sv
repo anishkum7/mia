@@ -68,7 +68,7 @@ assign out_valid_o = complex_add_out_valid_o[SIZE-1-1];
 
 genvar i, j;
 
-for (i=0; i < $clog2(SIZE); i=i+1) begin : mul_loop0
+for (i=0; i < $clog2(SIZE); i=i+1) begin : add_stage
   if (i == $clog2(SIZE)-1) begin
     assign complex_add_out_ready_i[i] = out_ready_i;
   end
@@ -76,7 +76,7 @@ for (i=0; i < $clog2(SIZE); i=i+1) begin : mul_loop0
     assign complex_add_out_ready_i[i] = &complex_add_in_ready_o[SIZE - (SIZE >> (i+1))+ (SIZE >> (i+2)) -1-: (SIZE >> (i+2))];
   end
 
-  for (j=0; j < SIZE/(2**(i+1)); j = j+1) begin : mul_loop1
+  for (j=0; j < SIZE/(2**(i+1)); j = j+1) begin : add_loop
     if (i == 0) begin
       complex_add
       complex_add
