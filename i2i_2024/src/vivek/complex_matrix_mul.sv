@@ -109,7 +109,7 @@ for (i=0; i < $clog2(SIZE); i=i+1) begin : mul_loop0
         // Input signals
       .operands_i({complex_add_result_o[2*(SIZE-(SIZE >>i)+2*j-(SIZE>>i))+3],complex_add_result_o[2*(SIZE-(SIZE >>i)+2*j-(SIZE>>i))+2],complex_add_result_o[2*(SIZE-(SIZE >>i)+2*j-(SIZE>>i))+1],complex_add_result_o[2*(SIZE-(SIZE >>i)+2*j-(SIZE>>i))]}), // {b2,a2,b1,a1}
         // Input Handshake
-      .in_valid_i(in_valid_i),
+      .in_valid_i(&complex_add_out_valid_o[(SIZE-(SIZE >>i)-(SIZE>>i)) + SIZE/(2**(i))-1 -: SIZE/(2**(i))] ),
       .in_ready_o(complex_add_in_ready_o[SIZE-(SIZE >>i)+j]),
       .flush_i(flush_i),
       .sub(1'b0),
