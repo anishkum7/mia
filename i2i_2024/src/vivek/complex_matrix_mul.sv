@@ -52,7 +52,7 @@ logic [SIZE-1-1:0] complex_add_in_ready_o;
 logic [$clog2(SIZE)-1:0] complex_add_out_ready_i;
 logic [SIZE-1-1:0] complex_add_out_valid_o;
 logic [SIZE-1-1:0] complex_add_busy_o;
-logic [2*(SIZE)-1-1:0][63:0] complex_add_result_o;
+logic [2*(SIZE-1)-1:0][63:0] complex_add_result_o;
 
 
 logic [SIZE-1:0] complex_mul_in_ready_o;
@@ -107,7 +107,7 @@ for (i=0; i < $clog2(SIZE); i=i+1) begin : mul_loop0
       .clk_i(clk_i),
       .rst_ni(rst_ni),
         // Input signals
-      .operands_i({complex_add_result_o[4*(SIZE-(SIZE >>i)+j-(SIZE>>i))+3],complex_add_result_o[4*(SIZE-(SIZE >>i)+j-(SIZE>>i))+2],complex_add_result_o[4*(SIZE-(SIZE >>i)+j-(SIZE>>i))+1],complex_add_result_o[4*(SIZE-(SIZE >>i)+j-(SIZE>>i))]}), // {b2,a2,b1,a1}
+      .operands_i({complex_add_result_o[2*(SIZE-(SIZE >>i)+j-(SIZE>>i))+3],complex_add_result_o[2*(SIZE-(SIZE >>i)+j-(SIZE>>i))+2],complex_add_result_o[2*(SIZE-(SIZE >>i)+j-(SIZE>>i))+1],complex_add_result_o[2*(SIZE-(SIZE >>i)+j-(SIZE>>i))]}), // {b2,a2,b1,a1}
         // Input Handshake
       .in_valid_i(in_valid_i),
       .in_ready_o(complex_add_in_ready_o[SIZE-(SIZE >>i)+j]),
