@@ -73,7 +73,7 @@ for (i=0; i < $clog2(SIZE); i=i+1) begin : mul_loop0
     assign complex_add_out_ready_i[i] = out_ready_i;
   end
   else begin
-    assign complex_add_out_ready_i[i] = &complex_add_in_ready_o[SIZE*(1-((1/(2**(i+1)))))+:SIZE/(2*(i+1))];
+    assign complex_add_out_ready_i[i] = &complex_add_in_ready_o[SIZE*(1-((1/(2**(i+1)))))+:SIZE/(2*(i+2))];
   end
 
   for (j=0; j < SIZE/(2*(i+1)); j = j+1) begin : mul_loop1
