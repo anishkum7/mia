@@ -63,7 +63,7 @@ logic [SIZE*2-1:0][63:0] complex_mul_result_o;
 assign in_ready_o = &complex_mul_in_ready_o;
 //assign busy_o = (&complex_add0_busy_o) & (&complex_add1_busy_o) & (&complex_add2_busy_o) & complex_addfinal_busy_o & (&complex_mul_busy_o);
 assign busy_o = (&complex_add_busy_o) & (&complex_add_busy_o);
-assign result_o = {complex_add_result_o[SIZE*2-1-1],complex_add_result_o[SIZE*2-1-2]};
+assign result_o = {complex_add_result_o[(SIZE-1)*2-1],complex_add_result_o[(SIZE-1)*2-2]};
 assign out_valid_o = complex_add_out_valid_o[SIZE-1-1];
 
 genvar i, j;
@@ -243,7 +243,7 @@ complex_mul
 //.status_o(status_o),
   // Output handshake
 .out_valid_o(complex_mul_out_valid_o[i]),
-.out_ready_i(&complex_add_in_ready_o[SIZE>>1 -1:0]),
+.out_ready_i(&complex_add_in_ready_o[(SIZE>>1) -1:0]),
   // Indication of valid data in flight
 .busy_o(complex_mul_busy_o[i])
 );
