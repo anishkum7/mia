@@ -2,7 +2,7 @@ module tb_matrix;
 
 localparam NUM_OPERANDS=4,
             WIDTH = 64,
-            SIZE = 16;
+            SIZE = 4;
 
 logic                               clk_i;
 logic                               rst_ni;
@@ -101,10 +101,9 @@ end
 
 
 complex_matrix_mul 
-// #(
-// .NUM_OPERANDS(3),
-// .WIDTH(64)
-// )
+#(
+  .SIZE(SIZE)
+)
 DUT
 (
 .clk_i(clk_i),
