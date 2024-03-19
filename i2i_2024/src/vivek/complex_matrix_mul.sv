@@ -73,7 +73,7 @@ for (i=0; i < $clog2(SIZE); i=i+1) begin : mul_loop0
     assign complex_add_out_ready_i[i] = out_ready_i;
   end
   else begin
-    assign complex_add_out_ready_i[i] = &complex_add_in_ready_o[SIZE - (SIZE >> (i+1))+SIZE >> (i+2) -1-:SIZE >> (i+2)];
+    assign complex_add_out_ready_i[i] = &complex_add_in_ready_o[SIZE - (SIZE >> (i+1))+ (SIZE >> (i+2)) -1-: (SIZE >> (i+2))];
   end
 
   for (j=0; j < SIZE/(2**(i+1)); j = j+1) begin : mul_loop1
@@ -107,20 +107,20 @@ for (i=0; i < $clog2(SIZE); i=i+1) begin : mul_loop0
       .clk_i(clk_i),
       .rst_ni(rst_ni),
         // Input signals
-      .operands_i({complex_add_result_o[4*(SIZE*(1-(1/(2**i)))+j-(SIZE/(2*i)))+3],complex_add_result_o[4*(SIZE*(1-(1/(2**i)))+j-(SIZE/(2*i)))+2],complex_add_result_o[4*(SIZE*(1-(1/(2**i)))+j-(SIZE/(2*i)))+1],complex_add_result_o[4*(SIZE*(1-(1/(2**i)))+j-(SIZE/(2*i)))]}), // {b2,a2,b1,a1}
+      .operands_i({complex_add_result_o[4*(SIZE-(SIZE >>i)+j-(SIZE>>i))+3],complex_add_result_o[4*(SIZE-(SIZE >>i)+j-(SIZE>>i))+2],complex_add_result_o[4*(SIZE-(SIZE >>i)+j-(SIZE>>i))+1],complex_add_result_o[4*(SIZE-(SIZE >>i)+j-(SIZE>>i))]}), // {b2,a2,b1,a1}
         // Input Handshake
       .in_valid_i(in_valid_i),
-      .in_ready_o(complex_add_in_ready_o[(SIZE*(1-(1/(2**i)))+j)]),
+      .in_ready_o(complex_add_in_ready_o[SIZE-(SIZE >>i)+j]),
       .flush_i(flush_i),
       .sub(1'b0),
         // Output signals
-      .result_o({complex_add_result_o[2*(SIZE*(1-(1/(2**i)))+j)+1], complex_add_result_o[2*(SIZE*(1-(1/(2**i)))+j)]}),
+      .result_o({complex_add_result_o[2*(SIZE-(SIZE >>i)+j)+1], complex_add_result_o[2*(SIZE-(SIZE >>i)+j)]}),
       //.status_o(status_o),
         // Output handshake
-      .out_valid_o(complex_add_out_valid_o[(SIZE*(1-(1/(2**i)))+j)]),
+      .out_valid_o(complex_add_out_valid_o[(SIZE-(SIZE >>i)+j)]),
       .out_ready_i(complex_add_out_ready_i[i]),
         // Indication of valid data in flight
-      .busy_o(complex_add_busy_o[(SIZE*(1-(1/(2**i)))+j)])
+      .busy_o(complex_add_busy_o[(SIZE-(SIZE >>i)+j)])
       );    
     end
   end
@@ -243,7 +243,7 @@ complex_mul
 //.status_o(status_o),
   // Output handshake
 .out_valid_o(complex_mul_out_valid_o[i]),
-.out_ready_i(&complex_add_in_ready_o[SIZE/2 -1:0]),
+.out_ready_i(&complex_add_in_ready_o[SIZE>>1 -1:0]),
   // Indication of valid data in flight
 .busy_o(complex_mul_busy_o[i])
 );
