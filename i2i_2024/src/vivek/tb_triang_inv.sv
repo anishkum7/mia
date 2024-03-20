@@ -60,7 +60,7 @@ start = 0;
 #35
 rst_ni = 1;
 start = 1;
-#1000
+#20000
 $finish;
 end
 
