@@ -98,7 +98,7 @@ for (int i=0; i<SIZE; i=i+1) begin
 end
 
 $display("Expected Answer: %f + j%f", expected_real, expected_imaginary);
-$display("Answer %d : %f + j%f", $bitstoreal(result_o[0]), $bitstoreal(result_o[1]));
+$display("Answer: %f + j%f", $bitstoreal(result_o[0]), $bitstoreal(result_o[1]));
 // for (int i=0; i<SIZE; i=i+1) begin
 //   $display("Expected Answer %d : %f  %f", i, expected_imaginary, expected_real);
 //   $display("Answer %d : %f  %f", i, $bitstoreal(result_o[2*i+1]), $bitstoreal(result_o[2*i]));
