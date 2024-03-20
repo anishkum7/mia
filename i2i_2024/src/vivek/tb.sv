@@ -73,7 +73,7 @@ $finish;
 end
 
 
-always (@negedge clk_i) begin
+always @ (negedge clk_i) begin
   $display("%d",out_valid_o);
 end
 
