@@ -4,23 +4,23 @@ localparam NUM_OPERANDS=4,
             WIDTH = 64,
             SIZE = 16;
 
-  input logic                               clk_i;
-  input logic                               rst_ni;
+  logic                               clk_i;
+  logic                               rst_ni;
 
-  input logic [SIZE-1:0][2*63:0]            mat_row_i; // {b1,a1}
-  input logic                               mat_row_valid_i;
-  input logic [$clog2(SIZE)-1:0]            mat_row_addr_i;
-  output logic [$clog2(SIZE)-1:0]           mat_row_addr_o;
-  output logic                              mat_row_addr_valid_o;
+  logic [SIZE-1:0][2*63:0]            mat_row_i; // {b1,a1}
+  logic                               mat_row_valid_i;
+  logic [$clog2(SIZE)-1:0]            mat_row_addr_i;
+  logic [$clog2(SIZE)-1:0]           mat_row_addr_o;
+  logic                              mat_row_addr_valid_o;
   
-  output logic [SIZE*2-1:0][63:0]           inv_col_o; // {b1,a1}
-  output  logic                             inv_col_valid_o;
+  logic [SIZE*2-1:0][63:0]           inv_col_o; // {b1,a1}
+  logic                             inv_col_valid_o;
 
-  output logic                              in_ready_o;
-  input  logic                              flush_i;
-  input  logic                              start;
+  logic                              in_ready_o;
+  logic                              flush_i;
+  logic                              start;
 
-  output logic                              busy_o;
+  logic                              busy_o;
 
 
 logic [SIZE-1:0][SIZE*2*WIDTH-1:0] Matrix;
