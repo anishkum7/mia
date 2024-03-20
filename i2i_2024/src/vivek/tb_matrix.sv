@@ -91,10 +91,18 @@ in_valid_i = 1;
 out_ready_i = 1;
 wait(out_valid_o == 1'b1);
 @(negedge clk_i);
+
 for (int i=0; i<SIZE; i=i+1) begin
-  $display("Expected Answer %d : %f  %f", i, expected_imaginary, expected_real);
-  $display("Answer %d : %f  %f", i, $bitstoreal(result_o[2*i+1]), $bitstoreal(result_o[2*i]));
+  $display("Vector0[%d]: %f + j%f        Vector1[%d]: %f + j%f", i, $bitstoreal(Vector1real[i]), $bitstoreal(Vector1imaginary[i])
+    i, $bitstoreal(Vector2real[i]), $bitstoreal(Vector2imaginary[i]));
 end
+
+$display("Expected Answer: %f + j%f", i, expected_real, expected_imaginary);
+$display("Answer %d : %f + j%f", i, $bitstoreal(result_o[2*i]), $bitstoreal(result_o[2*i+1]));
+// for (int i=0; i<SIZE; i=i+1) begin
+//   $display("Expected Answer %d : %f  %f", i, expected_imaginary, expected_real);
+//   $display("Answer %d : %f  %f", i, $bitstoreal(result_o[2*i+1]), $bitstoreal(result_o[2*i]));
+// end
 #1000
 $finish;
 end
