@@ -24,7 +24,7 @@ logic                              busy_o;
 
 logic                              sub;
 
-real a,b,c,d, expected_real, expected_imaginary;
+real a,b,c,d, expected_div_real, expected_div_imaginary, expected_mul_real, expected_mul_imaginary;
 
 initial clk_i = 0;
 always #5 clk_i = ~clk_i;
