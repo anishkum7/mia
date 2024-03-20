@@ -45,12 +45,12 @@ operands_i[1] = $realtobits(b);
 
 c = $itor($urandom_range(0,2000));
 c = (c-1000)/100;
-c = 0;
+//c = 0;
 operands_i[2] = $realtobits(c);
 
 d = $itor($urandom_range(0,2000));
 d = (d-1000)/100;
-d = 0;
+//d = 0;
 operands_i[3] = $realtobits(d);  
 
 // operands_i[0] = 64'h401c000000000000;
