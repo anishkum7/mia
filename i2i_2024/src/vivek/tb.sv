@@ -72,11 +72,11 @@ $display("Answer : %f + j%f ",result_o[0], result_o[1]);
 $finish;
 end
 
-initial begin
+
 always (@negedge clk_i) begin
   $display("%d",out_valid_o);
 end
-end
+
 
 
 initial begin
