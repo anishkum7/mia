@@ -66,7 +66,8 @@ in_valid_i = 1;
 
 wait(out_valid_o == 1'b1);
 @(negedge clk_i);
-$display("Expected Answer : %f + j%f ",expected_real, expected_imaginary);
+$display("A = %f + j%f        B = %f + j%f", a,b,c,d);
+$display("Expected Answer = A/B : %f + j%f ",expected_real, expected_imaginary);
 $display("Answer : %f + j%f \n\n\n",$bitstoreal(result_o[0]), $bitstoreal(result_o[1]));
 #1000
 $finish;
