@@ -73,7 +73,7 @@ in_valid_i = 1;
 wait(out_valid_o == 1'b1);
 @(negedge clk_i);
 $display("A = %f + j%f        B = %f + j%f", a,b,c,d);
-$display("Expected Answer = A*B : %f + j%f ",expected_mul_real, expected_mul_imaginary);
+$display("Expected Answer = A/B : %f + j%f ",expected_div_real, expected_div_imaginary);
 $display("Answer : %f + j%f \n\n\n",$bitstoreal(result_o[0]), $bitstoreal(result_o[1]));
 #1000
 $finish;
@@ -91,7 +91,7 @@ initial begin
 $finish;
 end
 
-complex_mul 
+complex_div 
 // #(
 // .NUM_OPERANDS(3),
 // .WIDTH(64)
