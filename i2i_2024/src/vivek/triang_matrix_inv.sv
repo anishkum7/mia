@@ -6,7 +6,7 @@ module traing_matrix_inv
   input logic                               clk_i,
   input logic                               rst_ni,
 
-  input logic [SIZE-1:0][2*63:0]            mat_row_i, // {b1,a1}
+  input logic [SIZE-1:0][2*64-1:0]            mat_row_i, // {b1,a1}
   input logic                               mat_row_valid_i,
   input logic [$clog2(SIZE)-1:0]            mat_row_addr_i,
   output logic [$clog2(SIZE)-1:0]           mat_row_addr_o,
@@ -39,7 +39,7 @@ state_t state;
   logic                              div_busy_o;
   
 
-logic [SIZE-1:0][2*63:0]            diag_buffer;
+logic [SIZE-1:0][2*64-1:0]            diag_buffer;
 
 
 always @ (posedge clk_i) begin
