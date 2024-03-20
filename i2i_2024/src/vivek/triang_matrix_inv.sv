@@ -111,7 +111,7 @@ end
 
 always @ (*) begin
 
-  div_operands_i = {64'b0,64'h3ff0000000000000,mat_row_i[mat_row_addr_i]};
+  div_operands_i = {mat_row_i[mat_row_addr_i],64'b0,64'h3ff0000000000000};
   div_in_valid_i = 0;
   div_out_ready_i = 1;
   case (state) 
