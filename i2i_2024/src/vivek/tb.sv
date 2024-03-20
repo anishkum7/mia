@@ -58,8 +58,12 @@ operands_i[3] = $realtobits(d);
 // operands_i[2] = 64'h3ff0000000000000;
 // operands_i[3] = 64'h4000000000000000;
 
-expected_real = (a*c + b*d)/(c*c + d*d);
-expected_imaginary = (-a*d + b*c)/(c*c + d*d);
+expected_div_real = (a*c + b*d)/(c*c + d*d);
+expected_div_imaginary = (-a*d + b*c)/(c*c + d*d);
+
+expected_mul_real = (a*c - b*d);
+expected_mul_imaginary = (a*d + b*c);
+
 
 flush_i = 0;
 #35
@@ -69,7 +73,7 @@ in_valid_i = 1;
 wait(out_valid_o == 1'b1);
 @(negedge clk_i);
 $display("A = %f + j%f        B = %f + j%f", a,b,c,d);
-$display("Expected Answer = A/B : %f + j%f ",expected_real, expected_imaginary);
+$display("Expected Answer = A/B : %f + j%f ",expected_mul_real, expected_mul_imaginary);
 $display("Answer : %f + j%f \n\n\n",$bitstoreal(result_o[0]), $bitstoreal(result_o[1]));
 #1000
 $finish;
@@ -87,7 +91,7 @@ initial begin
 $finish;
 end
 
-complex_div 
+complex_mul 
 // #(
 // .NUM_OPERANDS(3),
 // .WIDTH(64)
