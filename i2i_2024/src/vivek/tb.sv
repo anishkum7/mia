@@ -57,7 +57,7 @@ operands_i[3] = $realtobits(d);
 // operands_i[3] = 64'h4000000000000000;
 
 expected_real = (a*c + b*d)/(c*c + d*d);
-expected_imaginary = (-a*d - b*c)/(c*c + d*d);
+expected_imaginary = (-a*d + b*c)/(c*c + d*d);
 
 flush_i = 0;
 #35
@@ -67,7 +67,7 @@ in_valid_i = 1;
 wait(out_valid_o == 1'b1);
 @(negedge clk_i);
 $display("Expected Answer : %f + j%f ",expected_real, expected_imaginary);
-$display("Answer : %f + j%f ",$bitstoreal(result_o[0]), $bitstoreal(result_o[1]));
+$display("Answer : %f + j%f \n\n\n",$bitstoreal(result_o[0]), $bitstoreal(result_o[1]));
 #1000
 $finish;
 end
