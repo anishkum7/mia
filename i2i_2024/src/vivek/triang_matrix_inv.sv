@@ -26,6 +26,8 @@ module traing_matrix_inv
 
 typedef enum logic [2:0] {IDLE, DIAG, INV} state_t;
 
+state_t state;
+
 
   logic [3:0][63:0]                  div_operands_i; // {b2,a2,b1,a1}
   logic                              div_in_valid_i;
@@ -45,7 +47,7 @@ always @ (posedge clk) begin
     state <= IDLE;
   end
   else begin
-    case (state_t) 
+    case (state) 
       IDLE : begin
         if (start) begin
           state <= DIAG;
@@ -64,13 +66,13 @@ end
 
 
 
-always @ (posedge clk) begin
+always @ (posedge clk_i) begin
   if (!rst_ni) begin
     mat_row_addr_o <= 0;
     mat_row_addr_valid_o <= 0;
   end
   else begin
-    case (state_t) 
+    case (state) 
       DIAG : begin
         if (div_in_valid_i & div_in_ready_o) begin
           if (mat_row_addr_o == SIZE-1) begin
@@ -95,7 +97,7 @@ always @ (*) begin
 
   div_operands_i = {64'b0,64'h3ff0000000000000,mat_row_i[mat_row_addr_i]};
   div_in_valid_i = 0;
-  case (state_t) 
+  case (state) 
     DIAG : begin
       mat_row_addr_valid_o = 1;
       div_in_valid_i = mat_row_valid_i & (mat_row_addr_i == mat_row_addr_o);
