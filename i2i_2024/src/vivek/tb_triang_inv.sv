@@ -1,4 +1,4 @@
-module tb_traing_inv;
+module tb_triang_inv;
 
 localparam NUM_OPERANDS=4,
             WIDTH = 64,
