@@ -29,18 +29,20 @@ typedef enum logic [2:0] {IDLE, DIAG, INV} state_t;
 state_t state;
 
 
-  logic [3:0][63:0]                  div_operands_i; // {b2,a2,b1,a1}
-  logic                              div_in_valid_i;
-  logic                              div_in_ready_o;
-  logic [1:0][63:0]                  div_result_o;
-  fpnew_pkg::status_t                div_status_o;
-  logic                              div_out_valid_o;
-  logic                              div_out_ready_i;
-  logic                              div_busy_o;
-  
+logic [3:0][63:0]                  div_operands_i; // {b2,a2,b1,a1}
+logic                              div_in_valid_i;
+logic                              div_in_ready_o;
+logic [1:0][63:0]                  div_result_o;
+fpnew_pkg::status_t                div_status_o;
+logic                              div_out_valid_o;
+logic                              div_out_ready_i;
+logic                              div_busy_o;
+
 
 logic [SIZE-1:0][2*64-1:0]            diag_buffer;
 
+logic [$clog2(SIZE)-1:0]              write_ptr;
+logic                                 iterate;
 
 always @ (posedge clk_i) begin
   if (!rst_ni) begin
@@ -54,7 +56,7 @@ always @ (posedge clk_i) begin
         end
       end
       DIAG : begin
-        if (div_out_valid_o && mat_row_addr_o == 0) begin
+        if (div_out_valid_o && write_ptr == SIZE-1) begin
           state <= INV;      
         end
       end
@@ -70,13 +72,21 @@ always @ (posedge clk_i) begin
   if (!rst_ni) begin
     mat_row_addr_o <= 0;
     mat_row_addr_valid_o <= 0;
+    write_ptr <= 0;
+    iterate <= 0;
   end
   else begin
     case (state) 
+      IDLE : begin
+        if (start) begin
+          iterate <= 1;
+        end
+      end
       DIAG : begin
-        if (div_in_valid_i & div_in_ready_o) begin
+        if (div_in_valid_i & div_in_ready_o & iterate) begin
           if (mat_row_addr_o == SIZE-1) begin
             mat_row_addr_o <= 0;
+            iterate <= 0;
           end
           else begin
             mat_row_addr_o <= mat_row_addr_o + 1;
@@ -84,7 +94,13 @@ always @ (posedge clk_i) begin
         end
 
         if (div_out_valid_o) begin
-          diag_buffer[mat_row_addr_o] <= div_result_o;
+          if (write_ptr == SIZE-1) begin
+            write_ptr <= 0;
+          end
+          else begin
+            write_ptr <= write_ptr+1;
+          end
+          diag_buffer[write_ptr] <= div_result_o;
         end
       end
     endcase
