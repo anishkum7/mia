@@ -17,12 +17,7 @@ module traing_matrix_inv
 
   output logic                              in_ready_o,
   input  logic                              flush_i,
- 
-  output logic [1:0][63:0]                  result_o,
-
- 
-  output logic                              out_valid_o,
-  input  logic                              out_ready_i,
+  input  logic                              start,
 
   output logic                              busy_o
 
@@ -44,6 +39,31 @@ typedef enum logic [2:0] {IDLE, DIAG, INV} state_t;
 
 logic [SIZE-1:0][2*63:0]            diag_buffer;
 
+
+always @ (posedge clk) begin
+  if (!rst_ni) begin
+    state <= IDLE;
+  end
+  else begin
+    case (state_t) 
+      IDLE : begin
+        if (start) begin
+          state <= DIAG;
+        end
+      end
+      DIAG : begin
+        if (div_out_valid_o && mat_row_addr_o == 0) begin
+          state <= INV;      
+        end
+      end
+    endcase
+  
+  end
+ 
+end
+
+
+
 always @ (posedge clk) begin
   if (!rst_ni) begin
     mat_row_addr_o <= 0;
@@ -52,16 +72,18 @@ always @ (posedge clk) begin
   else begin
     case (state_t) 
       DIAG : begin
-        if (div_out_valid_o) begin
+        if (div_in_valid_i & div_in_ready_o) begin
           if (mat_row_addr_o == SIZE-1) begin
             mat_row_addr_o <= 0;
           end
           else begin
             mat_row_addr_o <= mat_row_addr_o + 1;
-          end
-          diag_buffer[mat_row_addr_o] <= div_result_o;      
+          end      
         end
 
+        if (div_out_valid_o) begin
+          diag_buffer[mat_row_addr_o] <= div_result_o;
+        end
       end
     endcase
   
@@ -75,7 +97,7 @@ always @ (*) begin
   div_in_valid_i = 0;
   case (state_t) 
     DIAG : begin
-      mat_row_addr_valid_o = div_in_ready_o;
+      mat_row_addr_valid_o = 1;
       div_in_valid_i = mat_row_valid_i & (mat_row_addr_i == mat_row_addr_o);
     end
   endcase 
