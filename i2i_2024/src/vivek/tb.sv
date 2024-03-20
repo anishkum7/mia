@@ -73,6 +73,13 @@ $finish;
 end
 
 initial begin
+always (@negedge clk_i) begin
+  $display("%d",out_valid_o);
+end
+end
+
+
+initial begin
 #1000
 $finish;
 end
