@@ -1,4 +1,4 @@
-module tb_matrix;
+module tb_traing_inv;
 
 localparam NUM_OPERANDS=4,
             WIDTH = 64,
