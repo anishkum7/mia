@@ -74,7 +74,7 @@ end
 
 traing_matrix_inv
 #(
-     localparam SIZE = 16
+  .SIZE(SIZE)
  )
 (
   .clk_i,
