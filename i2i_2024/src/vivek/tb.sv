@@ -67,15 +67,15 @@ in_valid_i = 1;
 wait(out_valid_o == 1'b1);
 @(negedge clk_i);
 $display("Expected Answer : %f + j%f ",expected_real, expected_imaginary);
-$display("Answer : %f + j%f ",result_o[0], result_o[1]);
+$display("Answer : %f + j%f ",$bitstoreal(result_o[0]), $bitstoreal(result_o[1]));
 #1000
 $finish;
 end
 
 
-always @ (negedge clk_i) begin
-  $display("%d",out_valid_o);
-end
+// always @ (negedge clk_i) begin
+//   $display("%d",out_valid_o);
+// end
 
 
 
