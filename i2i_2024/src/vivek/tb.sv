@@ -31,9 +31,9 @@ always #5 clk_i = ~clk_i;
 
 initial begin
 sub = 1;
-rst_ni = 1;
+rst_ni = 0;
 in_valid_i = 0;
-out_ready_i = 0;
+out_ready_i = 1;
 
 a = $itor($urandom_range(0,2000));
 a = (a-1000)/100;
@@ -61,9 +61,9 @@ expected_imaginary = (-a*d - b*c)/(c*c + d*d);
 
 flush_i = 0;
 #35
-rst_ni = 0;
+rst_ni = 1;
 in_valid_i = 1;
-out_ready_i = 1;
+
 wait(out_valid_o == 1'b1);
 @(negedge clk_i);
 $display("Expected Answer : %f + j%f ",expected_real, expected_imaginary);
@@ -72,6 +72,10 @@ $display("Answer : %f + j%f ",result_o[0], result_o[1]);
 $finish;
 end
 
+initial begin
+#1000
+$finish;
+end
 
 complex_div 
 // #(
