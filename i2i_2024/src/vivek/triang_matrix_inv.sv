@@ -116,7 +116,7 @@ always @ (*) begin
   div_out_ready_i = 1;
   case (state) 
     DIAG : begin
-      mat_row_addr_valid_o = 1;
+      mat_row_addr_valid_o = iterate;
       div_in_valid_i = mat_row_valid_i & (mat_row_addr_i == mat_row_addr_o);
     end
   endcase 
