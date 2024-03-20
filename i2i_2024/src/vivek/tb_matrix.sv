@@ -93,7 +93,7 @@ wait(out_valid_o == 1'b1);
 @(negedge clk_i);
 
 for (int i=0; i<SIZE; i=i+1) begin
-  $display("Vector0[%d]: %f + j%f        Vector1[%d]: %f + j%f", i, $bitstoreal(Vector1real[i]), $bitstoreal(Vector1imaginary[i])
+  $display("Vector0[%d]: %f + j%f        Vector1[%d]: %f + j%f", i, $bitstoreal(Vector1real[i]), $bitstoreal(Vector1imaginary[i]),
     i, $bitstoreal(Vector2real[i]), $bitstoreal(Vector2imaginary[i]));
 end
 
