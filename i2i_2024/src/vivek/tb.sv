@@ -24,27 +24,50 @@ logic                              busy_o;
 
 logic                              sub;
 
+real a,b,c,d, expected_real, expected_imaginary;
 
 initial clk_i = 0;
 always #5 clk_i = ~clk_i;
 
 initial begin
 sub = 1;
-rst_ni = 0;
+rst_ni = 1;
 in_valid_i = 0;
 out_ready_i = 0;
-operands_i[0] = 64'h401c000000000000;
-operands_i[1] = 64'h4000000000000000;
-operands_i[2] = 64'h3ff0000000000000;
-operands_i[3] = 64'h4000000000000000;
+
+a = $itor($urandom_range(0,2000));
+a = (a-1000)/100;
+operands_i[0] = $realtobits(a);
+
+b = $itor($urandom_range(0,2000));
+b = (b-1000)/100;
+operands_i[1] = $realtobits(b);
+
+c = $itor($urandom_range(0,2000));
+c = (c-1000)/100;
+operands_i[2] = $realtobits(c);
+
+d = $itor($urandom_range(0,2000));
+d = (d-1000)/100;
+operands_i[3] = $realtobits(d);  
+
+// operands_i[0] = 64'h401c000000000000;
+// operands_i[1] = 64'h4000000000000000;
+// operands_i[2] = 64'h3ff0000000000000;
+// operands_i[3] = 64'h4000000000000000;
+
+expected_real = (a*c + b*d)/(c*c + d*d);
+expected_imaginary = (-a*d - b*c)/(c*c + d*d);
+
 flush_i = 0;
 #35
-rst_ni = 1;
+rst_ni = 0;
 in_valid_i = 1;
 out_ready_i = 1;
 wait(out_valid_o == 1'b1);
 @(negedge clk_i);
-$display("Answer : %x  %x",result_o[1], result_o[0]);
+$display("Expected Answer : %f + j%f ",expected_real, expected_imaginary);
+$display("Answer : %f + j%f ",result_o[0], result_o[1]);
 #1000
 $finish;
 end
