@@ -54,7 +54,6 @@ initial clk_i = 0;
 always #5 clk_i = ~clk_i;
 
 initial begin
-sub = 1;
 rst_ni = 0;
 flush_i = 0;
 start = 0;
@@ -76,6 +75,7 @@ traing_matrix_inv
 #(
   .SIZE(SIZE)
  )
+ DUT
 (
   .clk_i,
   .rst_ni,

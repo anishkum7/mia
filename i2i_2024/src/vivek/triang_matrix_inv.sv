@@ -42,7 +42,7 @@ state_t state;
 logic [SIZE-1:0][2*63:0]            diag_buffer;
 
 
-always @ (posedge clk) begin
+always @ (posedge clk_i) begin
   if (!rst_ni) begin
     state <= IDLE;
   end
