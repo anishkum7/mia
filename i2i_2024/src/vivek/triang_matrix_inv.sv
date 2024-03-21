@@ -147,7 +147,7 @@ always @ (posedge clk_i) begin
               mat_row_addr_o <= 0;
             end
             else begin
-              mat_row_addr_o <= inv_col_addr_o + 1;
+              mat_row_addr_o <= inv_col_addr_o + 'd2;
             end
             iterate <= 0;
           end
