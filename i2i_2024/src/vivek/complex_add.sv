@@ -80,7 +80,7 @@ mul_add0
   .status_o(status_o),
   //.tag_o(tag_o),
   .out_valid_o(out_valid_o),
-  .out_ready_i(in_ready_o),
+  .out_ready_i(out_ready_i),
   .busy_o(busy_o)
 );
 
