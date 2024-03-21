@@ -185,6 +185,7 @@ always @ (posedge clk_i) begin
             if (inv_col_addr_o != SIZE-2) begin
               iterate <= 1;
             end
+            inv_col_addr_o <= inv_col_addr_o+1;
           end
         end
       end
