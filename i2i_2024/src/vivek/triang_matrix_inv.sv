@@ -124,9 +124,9 @@ always @ (posedge clk_i) begin
 
         if (div_out_valid_o) begin
           if (write_ptr == SIZE-1) begin
-            write_ptr <= 0;
-            
             //Setting up for the next state
+            
+            write_ptr <= 1;
             iterate <= 1;
             inv_col_o <= 0;
             mat_row_addr_o <= 'd1;
