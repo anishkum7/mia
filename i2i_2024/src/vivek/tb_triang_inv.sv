@@ -2,7 +2,7 @@ module tb_triang_inv;
 
 localparam NUM_OPERANDS=4,
             WIDTH = 64,
-            SIZE = 16;
+            SIZE = 8;
 
   logic                               clk_i;
   logic                               rst_ni;
@@ -30,21 +30,28 @@ real a,b,c,d;
 
 initial begin
   for (int i = 0; i < SIZE; i++) begin
-    for (int j = 0; j <= i; j++) begin
-      // Generate random real and imaginary parts
-      a = $itor($urandom_range(0,2000));
-      a = (a-1000)/100;
+    for (int j = 0; j < SIZE; j++) begin
+      
+      if (j > i) begin
+        Matrix[i][j*2*WIDTH + WIDTH-1 -: WIDTH] = 0;
+        Matrix[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH] = 0;
+      end
+      else begin
+        // Generate random real and imaginary parts
+        a = $itor($urandom_range(0,2000));
+        a = (a-1000)/100;
 
-      b = $itor($urandom_range(0,2000));
-      b = (a-1000)/100;
+        b = $itor($urandom_range(0,2000));
+        b = (a-1000)/100;
 
-      // Make sure diagonal elements are non-zero
-      if (i == j && a == 0)
-        a = 1; // Set a non-zero value for the diagonal
+        // Make sure diagonal elements are non-zero
+        if (i == j && a == 0)
+          a = 1; // Set a non-zero value for the diagonal
 
-      // Assign values to the matrix
-      Matrix[i][j*2*WIDTH + WIDTH-1 -: WIDTH] = $realtobits(a);
-      Matrix[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH] = $realtobits(b);
+        // Assign values to the matrix
+        Matrix[i][j*2*WIDTH + WIDTH-1 -: WIDTH] = $realtobits(a);
+        Matrix[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH] = $realtobits(b);
+      end
     end
   end
 end
@@ -60,7 +67,7 @@ start = 0;
 #35
 rst_ni = 1;
 start = 1;
-#20000
+#200000
 $finish;
 end
 

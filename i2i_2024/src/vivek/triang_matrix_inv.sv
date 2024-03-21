@@ -13,6 +13,7 @@ module traing_matrix_inv
   output logic                              mat_row_addr_valid_o,
   
   output logic [SIZE*2-1:0][63:0]           inv_col_o, // {b1,a1}
+  output logic [$clog2(SIZE)-1:0]           inv_col_addr_o,
   output  logic                             inv_col_valid_o,
 
   output logic                              in_ready_o,
@@ -39,6 +40,26 @@ logic                              div_out_ready_i;
 logic                              div_busy_o;
 
 
+
+logic [SIZE*4-1:0][63:0]           vector_mul_operands_i; // {b2,a2,b1,a1}
+logic                              vector_mul_in_valid_i;
+logic                              vector_mul_in_ready_o;
+logic [1:0][63:0]                  vector_mul_result_o;
+logic                              vector_mul_out_valid_o;
+logic                              vector_mul_out_ready_i;
+logic                              vector_mul_busy_o;
+
+
+logic [3:0][63:0]                  mul_operands_i; // {b2,a2,b1,a1}
+logic                              mul_in_valid_i;
+logic                              mul_in_ready_o;
+logic [1:0][63:0]                  mul_result_o;
+output fpnew_pkg::status_t         mul_status_o;
+logic                              mul_out_valid_o;
+logic                              mul_out_ready_i;
+logic                              mul_busy_o;
+
+
 logic [SIZE-1:0][2*64-1:0]            diag_buffer;
 
 logic [$clog2(SIZE)-1:0]              write_ptr;
@@ -56,8 +77,13 @@ always @ (posedge clk_i) begin
         end
       end
       DIAG : begin
-        if (div_out_valid_o && write_ptr == SIZE-1) begin
+        if (div_out_valid_o & write_ptr == SIZE-1) begin
           state <= INV;      
+        end
+      end
+      INV : begin
+        if (inv_col_addr_o == SIZE-1 & inv_col_valid_o & out_ready_i) begin
+          state <= IDLE;
         end
       end
     endcase
@@ -72,6 +98,8 @@ always @ (posedge clk_i) begin
   if (!rst_ni) begin
     mat_row_addr_o <= 0;
     mat_row_addr_valid_o <= 0;
+    inv_col_o <= 0;
+    inv_col_addr_o <= 0;
     write_ptr <= 0;
     iterate <= 0;
   end
@@ -96,11 +124,67 @@ always @ (posedge clk_i) begin
         if (div_out_valid_o) begin
           if (write_ptr == SIZE-1) begin
             write_ptr <= 0;
+            
+            //Setting up for the next state
+            iterate <= 1;
+            inv_col_o <= 0;
+            mat_row_addr_o <= 'd1;
+            
+            inv_col_addr_o <= 0;
+            inv_col_o[0] <= diag_buffer[0];
           end
           else begin
             write_ptr <= write_ptr+1;
           end
           diag_buffer[write_ptr] <= div_result_o;
+        end
+      end
+      INV : begin
+        if (vector_mul_in_valid_i & vector_mul_in_ready_o & iterate) begin
+          if (mat_row_addr_o == SIZE-1) begin
+            if (inv_col_addr_o == SIZE-2) begin
+              mat_row_addr_o <= 0;
+            end
+            else begin
+              mat_row_addr_o <= inv_col_addr_o + 1;
+            end
+            iterate <= 0;
+          end
+          else begin
+            mat_row_addr_o <= mat_row_addr_o + 1;
+          end      
+        end 
+
+        if (mul_out_valid_o) begin
+          if (write_ptr == SIZE-1) begin
+            inv_col_valid_o <= 1;
+            if (inv_col_addr_o == SIZE-2) begin      
+              write_ptr <= 0;
+            end
+            else begin
+              write_ptr <= inv_col_addr_o + 'd2;
+            end            
+          end
+          else begin
+            write_ptr <= write_ptr + 1;
+          end
+          inv_col_o[write_ptr] <= mul_result_o;
+        end
+
+        if (inv_col_valid_o & out_ready_i) begin
+          if (inv_col_addr_o != SIZE-2) begin
+            inv_col_valid_o <= 0;
+          end
+          if (inv_col_addr_o == SIZE-1) begin
+            inv_col_addr_o <= 0;
+          end
+          else begin
+            inv_col_o <= 0;
+            inv_col_o[inv_col_addr_o + 1] <= diag_buffer[inv_col_addr_o + 1];
+            if (inv_col_addr_o != SIZE-2) begin
+              iterate <= 1;
+            end
+          end
         end
       end
     endcase
@@ -114,10 +198,32 @@ always @ (*) begin
   div_operands_i = {mat_row_i[mat_row_addr_i],64'b0,64'h3ff0000000000000};
   div_in_valid_i = 0;
   div_out_ready_i = 1;
+  mat_row_addr_valid_o = 0;
+
+  for (int i=0; i<SIZE; i=i+1) begin
+    vector_mul_operands_i[i*4] = inv_col_o[i*2];
+    vector_mul_operands_i[i*4+1] = inv_col_o[i*2+1];
+    vector_mul_operands_i[i*4+2] = mat_row_i[i*2];
+    vector_mul_operands_i[i*4+3] = mat_row_i[i*2+1];
+  end
+
+  vector_mul_in_valid_i = 0;
+  vector_mul_out_ready_i = mul_in_ready_o;
+  mul_operands_i = {{~vector_mul_result_o[1][63],vector_mul_result_o[1][62:0],
+    ~vector_mul_result_o[0][63],vector_mul_result_o[0][62:0]},
+    diag_buffer[write_ptr]}; 
+  
+  mul_in_valid_i = vector_mul_out_valid_o;
+  mul_out_ready_i = out_ready_i;
+
   case (state) 
     DIAG : begin
       mat_row_addr_valid_o = iterate;
       div_in_valid_i = mat_row_valid_i & (mat_row_addr_i == mat_row_addr_o);
+    end
+    INV : begin
+      mat_row_addr_valid_o = iterate;   
+      vector_mul_in_valid_i = mat_row_valid_i & (mat_row_addr_i == mat_row_addr_o);
     end
   endcase 
 
@@ -128,7 +234,7 @@ end
 
 complex_div
 // #(
-//     localparam
+//   
 // )
 div
 (
@@ -144,5 +250,42 @@ div
   .out_ready_i(div_out_ready_i),
   .busy_o(div_busy_o)
 );
+
+
+complex_matrix_mul
+#(
+  .SIZE(SIZE)
+ )
+vector_mul 
+(
+  .clk_i(clk_i),
+  .rst_ni(rst_ni),
+  .operands_i(vector_mul_operands_i), // {b2,a2,b1,a1}
+  .in_valid_i(vector_mul_in_valid_i),
+  .in_ready_o(vector_mul_in_ready_o),
+  .flush_i(flush_i),
+  .result_o(vector_mul_result_o),
+  .out_valid_o(vector_mul_out_valid_o),
+  .out_ready_i(vector_mul_out_ready_i),
+  .busy_o(vector_mul_busy_o)
+
+);
+
+complex_mul
+mul
+(
+.clk_i(clk_i),
+.rst_ni(rst_ni),
+.operands_i(mul_operands_i), // {b2,a2,b1,a1}
+.in_valid_i(mul_in_valid_i),
+.in_ready_o(mul_in_ready_o),
+.flush_i(flush_i),
+.status_o(mul_status_o),
+.result_o(mul_result_o),
+.out_valid_o(mul_out_valid_o),
+.out_ready_i(mul_out_ready_i),
+.busy_o(mul_busy_o)
+);
+
 
 endmodule
