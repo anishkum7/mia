@@ -1,6 +1,6 @@
 module traing_matrix_inv
 #(
-     localparam SIZE = 16
+     parameter SIZE = 16
  )
 (
   input logic                               clk_i,
