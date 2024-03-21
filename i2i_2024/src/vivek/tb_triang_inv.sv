@@ -19,6 +19,7 @@ localparam NUM_OPERANDS=4,
   logic                              in_ready_o;
   logic                              flush_i;
   logic                              start;
+  logic                              out_ready_i;
 
   logic                              busy_o;
 
@@ -65,6 +66,7 @@ rst_ni = 0;
 flush_i = 0;
 start = 0;
 #35
+out_ready_i = 1;
 rst_ni = 1;
 start = 1;
 #200000
@@ -97,6 +99,7 @@ traing_matrix_inv
   .in_ready_o(in_ready_o),
   .flush_i(flush_i),
   .start(start),
+  .out_ready_i(out_ready_i),
   .busy_o(busy_o)
 
 );

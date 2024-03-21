@@ -6,7 +6,7 @@ module traing_matrix_inv
   input logic                               clk_i,
   input logic                               rst_ni,
 
-  input logic [SIZE-1:0][2*64-1:0]            mat_row_i, // {b1,a1}
+  input logic [SIZE-1:0][2*64-1:0]          mat_row_i, // {b1,a1}
   input logic                               mat_row_valid_i,
   input logic [$clog2(SIZE)-1:0]            mat_row_addr_i,
   output logic [$clog2(SIZE)-1:0]           mat_row_addr_o,
@@ -19,6 +19,7 @@ module traing_matrix_inv
   output logic                              in_ready_o,
   input  logic                              flush_i,
   input  logic                              start,
+  input  logic                              out_ready_i,
 
   output logic                              busy_o
 
