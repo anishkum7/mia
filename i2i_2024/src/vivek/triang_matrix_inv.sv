@@ -54,7 +54,7 @@ logic [3:0][63:0]                  mul_operands_i; // {b2,a2,b1,a1}
 logic                              mul_in_valid_i;
 logic                              mul_in_ready_o;
 logic [1:0][63:0]                  mul_result_o;
-output fpnew_pkg::status_t         mul_status_o;
+fpnew_pkg::status_t                mul_status_o;
 logic                              mul_out_valid_o;
 logic                              mul_out_ready_i;
 logic                              mul_busy_o;
