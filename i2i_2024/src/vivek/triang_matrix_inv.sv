@@ -204,8 +204,8 @@ always @ (*) begin
   for (int i=0; i<SIZE; i=i+1) begin
     vector_mul_operands_i[i*4] = inv_col_o[i*2];
     vector_mul_operands_i[i*4+1] = inv_col_o[i*2+1];
-    vector_mul_operands_i[i*4+2] = mat_row_i[i*2];
-    vector_mul_operands_i[i*4+3] = mat_row_i[i*2+1];
+    vector_mul_operands_i[i*4+2] = mat_row_i[i][63:0];
+    vector_mul_operands_i[i*4+3] = mat_row_i[i][127:64];
   end
 
   vector_mul_in_valid_i = 0;
