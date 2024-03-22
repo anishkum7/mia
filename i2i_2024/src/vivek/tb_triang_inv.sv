@@ -28,6 +28,8 @@ localparam NUM_OPERANDS=4,
 logic [SIZE-1:0][SIZE*2*WIDTH-1:0] Matrix;
 logic [SIZE-1:0][SIZE*2*WIDTH-1:0] InvMatrix;
 
+real product [SIZE-1:0][2*SIZE-1:0];
+
 real expected_real, expected_imaginary;
 real a,b,c,d;
 
@@ -92,6 +94,33 @@ for (int i=0; i<SIZE; i=i+1) begin
   for (int j=0; j<SIZE; j=j+1) begin
     a = $bitstoreal(InvMatrix[j][i*2*WIDTH + WIDTH-1 -: WIDTH]);
     b = $bitstoreal(InvMatrix[j][i*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+    $write("(%f + j%f)",a,b);
+    if (j == SIZE-1) begin
+      $write("\n");
+    end
+  end
+end
+
+for (int i=0; i<SIZE; i=i+1) begin
+  for (int j=0; j<SIZE; j=j+1) begin
+    product[i][2*j] = 0;
+    product[i][2*j+1] = 0;
+    for (int k=0; k<SIZE; k=k+1) begin
+      a = $bitstoreal(Matrix[i][k*2*WIDTH + WIDTH-1 -: WIDTH]);
+      b = $bitstoreal(Matrix[i][k*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+      c = $bitstoreal(InvMatrix[j][k*2*WIDTH + WIDTH-1 -: WIDTH]);
+      d = $bitstoreal(InvMatrix[j][k*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+      product[i][2*j] += a*c - b*d;
+      product[i][2*j+1] += a*d + b*c;
+    end
+  end
+end
+
+$write("Product: \n\n");
+for (int i=0; i<SIZE; i=i+1) begin
+  for (int j=0; j<SIZE; j=j+1) begin
+    a = product[i][2*j];
+    b = product[i][2*j+1];
     $write("(%f + j%f)",a,b);
     if (j == SIZE-1) begin
       $write("\n");
