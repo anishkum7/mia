@@ -14,6 +14,7 @@ localparam NUM_OPERANDS=4,
   logic                              mat_row_addr_valid_o;
   
   logic [SIZE*2-1:0][63:0]           inv_col_o; // {b1,a1}
+  logic [$clog2(SIZE)-1:0]          inv_col_addr_o;
   logic                             inv_col_valid_o;
 
   logic                              in_ready_o;
@@ -127,6 +128,7 @@ traing_matrix_inv
   .mat_row_addr_o(mat_row_addr_o),
   .mat_row_addr_valid_o(mat_row_addr_valid_o),
   .inv_col_o(inv_col_o), // {b1,a1}
+  .inv_col_addr_o(inv_col_addr_o),
   .inv_col_valid_o(inv_col_valid_o),
   .in_ready_o(in_ready_o),
   .flush_i(flush_i),
