@@ -7,7 +7,7 @@ localparam NUM_OPERANDS=4,
   logic                               clk_i;
   logic                               rst_ni;
 
-  logic [SIZE-1:0][2*63:0]            mat_row_i; // {b1,a1}
+  logic [SIZE-1:0][2*64-1:0]            mat_row_i; // {b1,a1}
   logic                               mat_row_valid_i;
   logic [$clog2(SIZE)-1:0]            mat_row_addr_i;
   logic [$clog2(SIZE)-1:0]           mat_row_addr_o;
@@ -25,6 +25,7 @@ localparam NUM_OPERANDS=4,
 
 
 logic [SIZE-1:0][SIZE*2*WIDTH-1:0] Matrix;
+logic [SIZE-1:0][SIZE*2*WIDTH-1:0] InvMatrix;
 
 real expected_real, expected_imaginary;
 real a,b,c,d;
@@ -69,7 +70,33 @@ start = 0;
 out_ready_i = 1;
 rst_ni = 1;
 start = 1;
-#200000
+#20
+start = 0;
+wait(in_ready_o == 1);
+
+for (int i=0; i<SIZE; i=i+1) begin
+  for (int j=0; j<SIZE; j=j+1) begin
+    a = $bitstoreal(Matrix[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
+    b = $bitstoreal(Matrix[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+    $write("(%f + j%f)",a,b);
+    if (j == SIZE-1) begin
+      $write("\n");
+    end
+  end
+end
+
+for (int i=0; i<SIZE; i=i+1) begin
+  for (int j=0; j<SIZE; j=j+1) begin
+    a = $bitstoreal(InvMatrix[j][i*2*WIDTH + WIDTH-1 -: WIDTH]);
+    b = $bitstoreal(InvMatrix[j][i*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+    $write("(%f + j%f)",a,b);
+    if (j == SIZE-1) begin
+      $write("\n");
+    end
+  end
+end
+
+
 $finish;
 end
 
@@ -77,6 +104,11 @@ always @ (posedge clk_i) begin
   mat_row_i <= Matrix[mat_row_addr_o];
   mat_row_addr_i <= mat_row_addr_o;
   mat_row_valid_i <= mat_row_addr_valid_o;
+
+  if (inv_col_valid_o) begin
+    InvMatrix[inv_col_addr_o] <= inv_col_o;
+  end
+
 end
 
 

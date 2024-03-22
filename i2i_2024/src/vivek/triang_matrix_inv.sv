@@ -12,7 +12,7 @@ module traing_matrix_inv
   output logic [$clog2(SIZE)-1:0]           mat_row_addr_o,
   output logic                              mat_row_addr_valid_o,
   
-  output logic [SIZE-1:0][2*64-1:0]           inv_col_o, // {b1,a1}
+  output logic [SIZE-1:0][2*64-1:0]         inv_col_o, // {b1,a1}
   output logic [$clog2(SIZE)-1:0]           inv_col_addr_o,
   output  logic                             inv_col_valid_o,
 
@@ -201,6 +201,7 @@ always @ (*) begin
   div_in_valid_i = 0;
   div_out_ready_i = 1;
   mat_row_addr_valid_o = 0;
+  in_ready_o = state == IDLE;
 
   for (int i=0; i<SIZE; i=i+1) begin
     vector_mul_operands_i[i*4] = inv_col_o[i][63:0];
