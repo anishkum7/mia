@@ -128,7 +128,7 @@ for (int i=0; i<SIZE; i=i+1) begin
   end
 end
 
-
+#20
 $finish;
 end
 

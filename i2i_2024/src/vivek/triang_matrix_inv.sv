@@ -100,6 +100,7 @@ always @ (posedge clk_i) begin
     mat_row_addr_o <= 0;
     mat_row_addr_valid_o <= 0;
     inv_col_o <= 0;
+    inv_col_valid_o <= 0;
     inv_col_addr_o <= 0;
     write_ptr <= 0;
     iterate <= 0;
@@ -202,6 +203,7 @@ always @ (*) begin
   div_out_ready_i = 1;
   mat_row_addr_valid_o = 0;
   in_ready_o = state == IDLE;
+  busy_o == state != IDLE;
 
   for (int i=0; i<SIZE; i=i+1) begin
     vector_mul_operands_i[i*4] = inv_col_o[i][63:0];
