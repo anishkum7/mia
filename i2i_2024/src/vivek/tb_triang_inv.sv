@@ -2,7 +2,7 @@ module tb_triang_inv;
 
 localparam NUM_OPERANDS=4,
             WIDTH = 64,
-            SIZE = 8;
+            SIZE = 4;
 
   logic                               clk_i;
   logic                               rst_ni;
@@ -74,7 +74,7 @@ start = 1;
 #20
 start = 0;
 wait(in_ready_o == 1);
-
+$write("Input Matrix: \n\n")
 for (int i=0; i<SIZE; i=i+1) begin
   for (int j=0; j<SIZE; j=j+1) begin
     a = $bitstoreal(Matrix[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
@@ -85,6 +85,8 @@ for (int i=0; i<SIZE; i=i+1) begin
     end
   end
 end
+
+$write("Output Matrix: \n\n")
 
 for (int i=0; i<SIZE; i=i+1) begin
   for (int j=0; j<SIZE; j=j+1) begin
