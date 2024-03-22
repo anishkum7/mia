@@ -74,7 +74,7 @@ start = 1;
 #20
 start = 0;
 wait(in_ready_o == 1);
-$write("Input Matrix: \n\n")
+$write("Input Matrix: \n\n");
 for (int i=0; i<SIZE; i=i+1) begin
   for (int j=0; j<SIZE; j=j+1) begin
     a = $bitstoreal(Matrix[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
@@ -86,7 +86,7 @@ for (int i=0; i<SIZE; i=i+1) begin
   end
 end
 
-$write("Output Matrix: \n\n")
+$write("Output Matrix: \n\n");
 
 for (int i=0; i<SIZE; i=i+1) begin
   for (int j=0; j<SIZE; j=j+1) begin
