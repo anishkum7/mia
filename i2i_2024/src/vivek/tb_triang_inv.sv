@@ -2,7 +2,7 @@ module tb_triang_inv;
 
 localparam NUM_OPERANDS=4,
             WIDTH = 64,
-            SIZE = 16;
+            SIZE = 4;
 
   logic                               clk_i;
   logic                               rst_ni;
