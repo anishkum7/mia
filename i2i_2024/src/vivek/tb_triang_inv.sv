@@ -37,7 +37,7 @@ initial begin
   for (int i = 0; i < SIZE; i++) begin
     for (int j = 0; j < SIZE; j++) begin
       
-      if (j > i) begin
+      if (j < i) begin
         Matrix[i][j*2*WIDTH + WIDTH-1 -: WIDTH] = 0;
         Matrix[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH] = 0;
       end

@@ -127,15 +127,13 @@ always @ (posedge clk_i) begin
           if (write_ptr == SIZE-1) begin
             //Setting up for the next state
             
-            write_ptr <= SIZE-2;
+            write_ptr <= 1;
             iterate <= 1;
-            
-            mat_row_addr_o <= SIZE-2;
-            
-            inv_col_addr_o <= SIZE-1;
-            
             inv_col_o <= 0;
-            inv_col_o[SIZE-1] <= diag_buffer[SIZE-1];
+            mat_row_addr_o <= 'd1;
+            
+            inv_col_addr_o <= 0;
+            inv_col_o[0] <= diag_buffer[0];
           end
           else begin
             write_ptr <= write_ptr+1;
@@ -145,50 +143,50 @@ always @ (posedge clk_i) begin
       end
       INV : begin
         if (vector_mul_in_valid_i & vector_mul_in_ready_o & iterate) begin
-          if (mat_row_addr_o == 0) begin
-            if (inv_col_addr_o == 1) begin
-              mat_row_addr_o <= SIZE-1;
+          if (mat_row_addr_o == SIZE-1) begin
+            if (inv_col_addr_o == SIZE-2) begin
+              mat_row_addr_o <= 0;
             end
             else begin
-              mat_row_addr_o <= inv_col_addr_o - 'd2;
+              mat_row_addr_o <= inv_col_addr_o + 'd2;
             end
             iterate <= 0;
           end
           else begin
-            mat_row_addr_o <= mat_row_addr_o - 1;
+            mat_row_addr_o <= mat_row_addr_o + 1;
           end      
         end 
 
         if (mul_out_valid_o) begin
-          if (write_ptr == 0) begin
+          if (write_ptr == SIZE-1) begin
             inv_col_valid_o <= 1;
-            if (inv_col_addr_o == 1) begin      
-              write_ptr <= SIZE-1;
+            if (inv_col_addr_o == SIZE-2) begin      
+              write_ptr <= 0;
             end
             else begin
-              write_ptr <= inv_col_addr_o - 'd2;
+              write_ptr <= inv_col_addr_o + 'd2;
             end            
           end
           else begin
-            write_ptr <= write_ptr - 1;
+            write_ptr <= write_ptr + 1;
           end
           inv_col_o[write_ptr] <= mul_result_o;
         end
 
         if (inv_col_valid_o & out_ready_i) begin
-          if (inv_col_addr_o != 1) begin
+          if (inv_col_addr_o != SIZE-2) begin
             inv_col_valid_o <= 0;
           end
-          if (inv_col_addr_o == 0) begin
-            inv_col_addr_o <= SIZE-1;
+          if (inv_col_addr_o == SIZE-1) begin
+            inv_col_addr_o <= 0;
           end
           else begin
             inv_col_o <= 0;
-            inv_col_o[inv_col_addr_o - 1] <= diag_buffer[inv_col_addr_o - 1];
-            if (inv_col_addr_o != 1) begin
+            inv_col_o[inv_col_addr_o + 1] <= diag_buffer[inv_col_addr_o + 1];
+            if (inv_col_addr_o != SIZE-2) begin
               iterate <= 1;
             end
-            inv_col_addr_o <= inv_col_addr_o-1;
+            inv_col_addr_o <= inv_col_addr_o+1;
           end
         end
       end
