@@ -135,7 +135,7 @@ always @ (posedge clk_i) begin
             inv_col_addr_o <= SIZE-1;
             
             inv_col_o <= 0;
-            inv_col_o[SIZE-1] <= diag_buffer[SIZE-1];
+            inv_col_o[SIZE-1] <= div_result_o;//diag_buffer[SIZE-1];
           end
           else begin
             write_ptr <= write_ptr+1;
