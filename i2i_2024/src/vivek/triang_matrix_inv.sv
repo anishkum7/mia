@@ -83,7 +83,7 @@ always @ (posedge clk_i) begin
         end
       end
       INV : begin
-        if (inv_col_addr_o == SIZE-1 & inv_col_valid_o & out_ready_i) begin
+        if (inv_col_addr_o == 0 & inv_col_valid_o & out_ready_i) begin
           state <= IDLE;
         end
       end
