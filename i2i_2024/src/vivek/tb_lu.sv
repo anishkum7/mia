@@ -2,7 +2,7 @@ module tb_lu;
 
 localparam NUM_OPERANDS=4,
             WIDTH = 64,
-            SIZE = 4;
+            SIZE = 16;
 
   logic                               clk_i;
   logic                               rst_ni;
