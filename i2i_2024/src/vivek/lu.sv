@@ -79,6 +79,7 @@ logic                              mul_busy_o;
 
 
 logic [1:0][63:0]                  div_result_buffer;
+logic                              div_in_valid_buffer;
 //logic [SIZE-1:0][2*64-1:0]         mat_row_buffer;
 
 //logic                              loaded;
@@ -128,8 +129,11 @@ always @ (posedge clk_i) begin
     result_written <= 0;
     mat_row_written <= 0;
     result_addr_o <= 0;
+    div_in_valid_buffer <= 0;
   end
   else begin
+    div_in_valid_buffer <= div_in_valid_i;
+    
     case (state) 
       IDLE : begin
         if (start) begin
@@ -309,9 +313,9 @@ div
   .clk_i(clk_i),
   .rst_ni(rst_ni),
   .operands_i(div_operands_i), // {b2,a2,b1,a1}
-  .in_valid_i(div_in_valid_i),
+  .in_valid_i(div_in_valid_i & ~div_in_valid_buffer),
   .in_ready_o(div_in_ready_o),
-  .flush_i(flush_i | div_out_valid_o),
+  .flush_i(flush_i),
   .result_o(div_result_o),
   .status_o(div_status_o),
   .out_valid_o(div_out_valid_o),
