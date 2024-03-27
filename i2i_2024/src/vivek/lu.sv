@@ -241,12 +241,12 @@ always @ (posedge clk_i) begin
           result_written <= 0;
           mat_row_written <= 0;
           iterate <= 1;
-          if (result_addr_o == SIZE-2) begin
-            result_addr_o <= 0;
-          end
-          else begin
+          // if (result_addr_o == SIZE-1) begin
+          //   result_addr_o <= 0;
+          // end
+          // else begin
             result_addr_o <= result_addr_o + 1;
-          end
+          // end
 
         end 
 
