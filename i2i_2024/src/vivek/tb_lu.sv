@@ -140,7 +140,7 @@ end
 $finish;
 end
 
-init begin
+initial begin
 #10000
 $finish;
 end
