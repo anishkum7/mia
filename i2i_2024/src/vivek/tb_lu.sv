@@ -140,6 +140,11 @@ end
 $finish;
 end
 
+init begin
+#10000
+$finish;
+end
+
 always @ (posedge clk_i) begin
   mat_row_i <= Matrix[mat_row_read_addr_o];
   mat_row_read_addr_i <= mat_row_read_addr_o;
