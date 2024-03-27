@@ -1,4 +1,4 @@
-module tb_triang_inv;
+module tb_lu;
 
 localparam NUM_OPERANDS=4,
             WIDTH = 64,
@@ -77,7 +77,8 @@ rst_ni = 0;
 flush_i = 0;
 start = 0;
 #35
-out_ready_i = 1;
+result_out_ready_i = 1;
+mat_row_out_ready_i = 1;
 rst_ni = 1;
 start = 1;
 #20
@@ -140,7 +141,7 @@ $finish;
 end
 
 always @ (posedge clk_i) begin
-  mat_row_i <= Matrix[mat_row_addr_o];
+  mat_row_i <= Matrix[mat_row_read_addr_o];
   mat_row_read_addr_i <= mat_row_read_addr_o;
   mat_row_valid_i <= mat_row_read_addr_valid_o;
 
@@ -155,10 +156,10 @@ end
 
 
 lu
-lu
 #(
     .SIZE(SIZE)
  )
+ lu
 (
   .clk_i(clk_i),
   .rst_ni(rst_ni),
