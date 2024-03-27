@@ -133,6 +133,7 @@ always @ (posedge clk_i) begin
     mat_row_written <= 0;
     result_addr_o <= 0;
     div_in_valid_buffer <= 0;
+    div_result_buffer <= 0;
   end
   else begin
     div_in_valid_buffer <= div_in_valid_i;
