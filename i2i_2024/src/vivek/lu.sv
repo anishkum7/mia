@@ -257,10 +257,10 @@ always @ (*) begin
       div_in_valid_i = mat_row_valid_i & mat_row_read_addr_o == mat_row_read_addr_i;
     end
     LU : begin
-      for (int i=0; i<SIZE; i=i+1) begin
-        vector_mul_in_valid_i[i] = mul_out_valid_o;
-        vector_mul_out_ready_i[i] = vector_sub_in_ready_o;
-      end
+
+      vector_mul_in_valid_i = mul_out_valid_o;
+      vector_mul_out_ready_i = vector_sub_in_ready_o;
+      
       vector_sub_in_valid_i = (&vector_mul_out_valid_o) & (mat_row_read_addr_i == mat_row_read_addr_o) & mat_row_valid_i;
       vector_sub_out_ready_i = mat_row_out_ready_i;
 
@@ -286,13 +286,13 @@ for (j=0 ; j<SIZE; j=j+1) begin : vector_mul_loop
   .clk_i(clk_i),
   .rst_ni(rst_ni),
   .operands_i(vector_mul_operands_i[j]), // {b2,a2,b1,a1}
-  .in_valid_i(vector_mul_in_valid_i[j]),
+  .in_valid_i(vector_mul_in_valid_i),
   .in_ready_o(vector_mul_in_ready_o[j]),
   .flush_i(flush_i),
   .result_o(vector_mul_result_o[j]),
   .status_o(vector_mul_status_o[j]),
   .out_valid_o(vector_mul_out_valid_o[j]),
-  .out_ready_i(vector_mul_out_ready_i[j]),
+  .out_ready_i(vector_mul_out_ready_i),
   .busy_o(vector_mul_busy_o[j])
   );
 
