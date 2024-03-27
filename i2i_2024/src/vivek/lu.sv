@@ -101,7 +101,10 @@ always @ (posedge clk_i) begin
         end
       end
       INIT : begin
-        if (div_out_valid_o) begin
+        if (result_addr_o == SIZE-1 & result_valid_o & result_out_ready_i) begin
+          state <= IDLE;
+        end
+        else if (div_out_valid_o) begin
           state <= LU;
         end
       end
@@ -141,40 +144,67 @@ always @ (posedge clk_i) begin
         end
       end
       INIT : begin
-        if (div_in_valid_i) begin
-          iterate <= 0;
-          l_col_o <= 0;
-          l_col_o[result_addr_o] <= {64'b0,64'h3ff0000000000000};
+        if (result_addr_o == SIZE-1) begin
+          
+          if (mat_row_valid_i & mat_row_read_addr_o == mat_row_read_addr_i) begin
+            iterate <= 0;
+            l_col_o <= 0;
+            l_col_o[result_addr_o] <= {64'b0,64'h3ff0000000000000};
 
-          for (int i=0; i<SIZE; i=i+1) begin
-            if (i < result_addr_o) begin
-              u_row_o[i] <= 0;
+            for (int i=0; i<SIZE; i=i+1) begin
+              if (i < result_addr_o) begin
+                u_row_o[i] <= 0;
+              end
+              else begin
+                u_row_o[i] <= mat_row_i[i];
+              end
             end
-            else begin
-              u_row_o[i] <= mat_row_i[i];
-            end
+
+            result_valid_o <= 1;
           end
-        
-        end
-        
-        if (div_out_valid_o) begin
-          div_result_buffer <= div_result_o;
-          iterate <= 1;
-          mat_row_read_addr_o <= result_addr_o + 1;
-          write_ptr <= result_addr_o + 1;
-        end
 
+          if (result_valid_o & result_out_ready_i) begin
+            result_valid_o <= 0;
+            result_addr_o <= 0;
+            mat_row_read_addr_o <= 0;
+          end
+
+        end
+        else begin        
+          if (div_in_valid_i) begin
+            iterate <= 0;
+            l_col_o <= 0;
+            l_col_o[result_addr_o] <= {64'b0,64'h3ff0000000000000};
+
+            for (int i=0; i<SIZE; i=i+1) begin
+              if (i < result_addr_o) begin
+                u_row_o[i] <= 0;
+              end
+              else begin
+                u_row_o[i] <= mat_row_i[i];
+              end
+            end
+          
+          end
+          
+          if (div_out_valid_o) begin
+            div_result_buffer <= div_result_o;
+            iterate <= 1;
+            mat_row_read_addr_o <= result_addr_o + 1;
+            write_ptr <= result_addr_o + 1;
+          end
+        end
       end
       LU : begin
         if (vector_sub_in_valid_i & vector_sub_in_ready_o & iterate) begin
           if (mat_row_read_addr_o == SIZE-1) begin
             iterate <= 0;
-            if (result_addr_o == SIZE-2) begin
-              mat_row_read_addr_o <= 0;
-            end
-            else begin
+            // if (result_addr_o == SIZE-1) begin
+            //   mat_row_read_addr_o <= 0;
+            // end
+            // else begin
               mat_row_read_addr_o <= result_addr_o + 1;
-            end
+            // end
           end
           else begin
             mat_row_read_addr_o <= mat_row_read_addr_o + 1;
@@ -260,7 +290,7 @@ always @ (*) begin
     end
     INIT  : begin
       mat_row_read_addr_valid_o = iterate;
-      div_in_valid_i = mat_row_valid_i & mat_row_read_addr_o == mat_row_read_addr_i;
+      div_in_valid_i = mat_row_valid_i & mat_row_read_addr_o == mat_row_read_addr_i & (result_addr_o != SIZE-1);
     end
     LU : begin
 
