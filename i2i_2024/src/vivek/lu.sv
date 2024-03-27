@@ -143,6 +143,7 @@ always @ (posedge clk_i) begin
       INIT : begin
         if (div_in_valid_i) begin
           iterate <= 0;
+          l_col_o <= 0;
           l_col_o[result_addr_o] <= {64'b0,64'h3ff0000000000000};
 
           for (int i=0; i<SIZE; i=i+1) begin
@@ -171,9 +172,9 @@ always @ (posedge clk_i) begin
             if (result_addr_o == SIZE-2) begin
               mat_row_read_addr_o <= 0;
             end
-            // else begin
-            //   mat_row_read_addr_o <= result_addr_o + 'd2;
-            // end
+            else begin
+              mat_row_read_addr_o <= result_addr_o + 1;
+            end
           end
           else begin
             mat_row_read_addr_o <= mat_row_read_addr_o + 1;
@@ -274,6 +275,7 @@ always @ (*) begin
 
       mat_row_read_addr_valid_o = iterate;
       mat_row_valid_o = vector_sub_out_valid_o;
+      
     
     end
   endcase 
