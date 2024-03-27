@@ -186,7 +186,7 @@ lu
   .start(start),
   //input  logic                              out_ready_i,
 
-  .busy_o(start)
+  .busy_o(busy_o)
 
 );
 
