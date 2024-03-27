@@ -139,7 +139,7 @@ always @ (posedge clk_i) begin
       INIT : begin
         if (div_in_valid_i) begin
           iterate <= 0;
-          l_col_o[result_addr_o] <= 1;
+          l_col_o[result_addr_o] <= {64'b0,64'h3ff0000000000000};
 
           for (int i=0; i<SIZE; i=i+1) begin
             if (i < result_addr_o) begin
