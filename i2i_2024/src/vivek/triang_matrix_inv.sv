@@ -1,4 +1,4 @@
-module traing_matrix_inv
+module triang_matrix_inv
 #(
      parameter SIZE = 16
  )
