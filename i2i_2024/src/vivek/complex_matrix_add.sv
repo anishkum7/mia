@@ -1,6 +1,6 @@
 module complex_matrix_add
 #(
-     localparam SIZE = 16
+     parameter SIZE = 16
  )
 (
   input logic                               clk_i,
