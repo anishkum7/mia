@@ -155,8 +155,8 @@ always @ (posedge clk_i) begin
         if (div_out_valid_o) begin
           div_result_buffer <= div_result_o;
           iterate <= 1;
-          //mat_row_read_addr_o <= result_addr_o + 1;
-          //write_ptr <= result_addr_o + 1;
+          mat_row_read_addr_o <= result_addr_o + 1;
+          write_ptr <= result_addr_o + 1;
         end
 
       end
@@ -167,9 +167,9 @@ always @ (posedge clk_i) begin
             if (result_addr_o == SIZE-2) begin
               mat_row_read_addr_o <= 0;
             end
-            else begin
-              mat_row_read_addr_o <= result_addr_o + 'd2;
-            end
+            // else begin
+            //   mat_row_read_addr_o <= result_addr_o + 'd2;
+            // end
           end
           else begin
             mat_row_read_addr_o <= mat_row_read_addr_o + 1;
@@ -186,9 +186,9 @@ always @ (posedge clk_i) begin
             if (result_addr_o == SIZE-2) begin
               write_ptr <= 0;
             end
-            else begin
-              write_ptr <= result_addr_o + 'd2;
-            end
+            // else begin
+            //   write_ptr <= result_addr_o + 'd2;
+            // end
           end
           else begin
             write_ptr <= write_ptr + 1;
