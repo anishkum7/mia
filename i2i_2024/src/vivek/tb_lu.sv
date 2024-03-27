@@ -63,6 +63,18 @@ initial begin
 
     end
   end
+
+  $write("Input Matrix: \n\n");
+  for (int i=0; i<SIZE; i=i+1) begin
+    for (int j=0; j<SIZE; j=j+1) begin
+      a = $bitstoreal(Matrix[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
+      b = $bitstoreal(Matrix[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+      $write("(%f + j%f)",a,b);
+      if (j == SIZE-1) begin
+        $write("\n");
+      end
+    end
+  end
 end
 
 
@@ -81,17 +93,6 @@ start = 1;
 #20
 start = 0;
 wait(in_ready_o == 1);
-$write("Input Matrix: \n\n");
-for (int i=0; i<SIZE; i=i+1) begin
-  for (int j=0; j<SIZE; j=j+1) begin
-    a = $bitstoreal(Matrix[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
-    b = $bitstoreal(Matrix[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
-    $write("(%f + j%f)",a,b);
-    if (j == SIZE-1) begin
-      $write("\n");
-    end
-  end
-end
 
 $write("Output L Matrix: \n\n");
 
