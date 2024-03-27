@@ -44,11 +44,7 @@ initial begin
   for (int i = 0; i < SIZE; i++) begin
     for (int j = 0; j < SIZE; j++) begin
       
-      if (j < i) begin
-        Matrix[i][j*2*WIDTH + WIDTH-1 -: WIDTH] = 0;
-        Matrix[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH] = 0;
-      end
-      else begin
+
         // Generate random real and imaginary parts
         a = $itor($urandom_range(0,2000));
         a = (a-1000)/100;
@@ -63,7 +59,7 @@ initial begin
         // Assign values to the matrix
         Matrix[i][j*2*WIDTH + WIDTH-1 -: WIDTH] = $realtobits(a);
         Matrix[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH] = $realtobits(b);
-      end
+
     end
   end
 end
