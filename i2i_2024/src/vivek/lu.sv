@@ -15,13 +15,13 @@ module lu
   output logic [SIZE-1:0][2*64-1:0]         mat_row_o, // {b1,a1}
   output logic                              mat_row_valid_o,
   output logic [$clog2(SIZE)-1:0]           mat_row_write_addr_o,
-  output logic                              mat_row_out_ready_i,
+  input logic                               mat_row_out_ready_i,
   
   output logic [SIZE-1:0][2*64-1:0]         l_col_o, // {b1,a1}
   output logic [SIZE-1:0][2*64-1:0]         u_row_o, // {b1,a1}
   output logic [$clog2(SIZE)-1:0]           result_addr_o,
   output logic                              result_valid_o,
-  output logic                              result_out_ready_i,
+  input logic                               result_out_ready_i,
 
   output logic                              in_ready_o,
   input  logic                              flush_i,
