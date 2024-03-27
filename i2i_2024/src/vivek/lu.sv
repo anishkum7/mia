@@ -127,6 +127,7 @@ always @ (posedge clk_i) begin
     result_valid_o <= 0;
     result_written <= 0;
     mat_row_written <= 0;
+    result_addr_o <= 0;
   end
   else begin
     case (state) 
