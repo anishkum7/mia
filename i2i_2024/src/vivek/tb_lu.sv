@@ -4,32 +4,32 @@ localparam NUM_OPERANDS=4,
             WIDTH = 64,
             SIZE = 4;
 
-  logic                               clk_i,
-  logic                               rst_ni,
+  logic                               clk_i;
+  logic                               rst_ni;
 
-  logic [SIZE-1:0][2*64-1:0]          mat_row_i, // {b1,a1}
-  logic                               mat_row_valid_i,
-  logic [$clog2(SIZE)-1:0]            mat_row_read_addr_i,
-  logic [$clog2(SIZE)-1:0]           mat_row_read_addr_o,
-  logic                              mat_row_read_addr_valid_o,
+  logic [SIZE-1:0][2*64-1:0]          mat_row_i; // {b1,a1}
+  logic                               mat_row_valid_i;
+  logic [$clog2(SIZE)-1:0]            mat_row_read_addr_i;
+  logic [$clog2(SIZE)-1:0]           mat_row_read_addr_o;
+  logic                              mat_row_read_addr_valid_o;
   
-  logic [SIZE-1:0][2*64-1:0]         mat_row_o, // {b1,a1}
-  logic                              mat_row_valid_o,
-  logic [$clog2(SIZE)-1:0]           mat_row_write_addr_o,
-  logic                              mat_row_out_ready_i,
+  logic [SIZE-1:0][2*64-1:0]         mat_row_o; // {b1,a1}
+  logic                              mat_row_valid_o;
+  logic [$clog2(SIZE)-1:0]           mat_row_write_addr_o;
+  logic                              mat_row_out_ready_i;
   
-  logic [SIZE-1:0][2*64-1:0]         l_col_o, // {b1,a1}
-  logic [SIZE-1:0][2*64-1:0]         u_row_o, // {b1,a1}
-  logic [$clog2(SIZE)-1:0]           result_addr_o,
-  logic                              result_valid_o,
-  logic                              result_out_ready_i,
+  logic [SIZE-1:0][2*64-1:0]         l_col_o; // {b1,a1}
+  logic [SIZE-1:0][2*64-1:0]         u_row_o; // {b1,a1}
+  logic [$clog2(SIZE)-1:0]           result_addr_o;
+  logic                              result_valid_o;
+  logic                              result_out_ready_i;
 
-  logic                              in_ready_o,
-  logic                              flush_i,
-  logic                              start,
+  logic                              in_ready_o;
+  logic                              flush_i;
+  logic                              start;
   //input  logic                              out_ready_i,
 
-  logic                              busy_o
+  logic                              busy_o;
 
 
 logic [SIZE-1:0][SIZE*2*WIDTH-1:0] Matrix;

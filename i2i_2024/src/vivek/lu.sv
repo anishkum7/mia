@@ -122,9 +122,6 @@ always @ (posedge clk_i) begin
   if (!rst_ni) begin
     mat_row_read_addr_o <= 0;
     mat_row_read_addr_valid_o <= 0;
-    inv_col_o <= 0;
-    inv_col_valid_o <= 0;
-    inv_col_addr_o <= 0;
     write_ptr <= 0;
     iterate <= 0;
     result_valid_o <= 0;
