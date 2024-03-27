@@ -307,11 +307,11 @@ complex_div
 div
 (
   .clk_i(clk_i),
-  .rst_ni(rst_ni | div_out_valid_o),
+  .rst_ni(rst_ni & ~div_out_valid_o),
   .operands_i(div_operands_i), // {b2,a2,b1,a1}
   .in_valid_i(div_in_valid_i),
   .in_ready_o(div_in_ready_o),
-  .flush_i(flush_i | rst_ni | div_out_valid_o),
+  .flush_i(flush_i),
   .result_o(div_result_o),
   .status_o(div_status_o),
   .out_valid_o(div_out_valid_o),
