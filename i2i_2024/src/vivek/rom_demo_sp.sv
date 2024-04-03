@@ -69,7 +69,7 @@ fpnew_pkg::status_t mul_status_o;
 logic [1:0][63:0] mul_result_o;
 
 
-complex_div 
+complex_mul 
 // #(
 // .NUM_OPERANDS(3),
 // .WIDTH(64)
