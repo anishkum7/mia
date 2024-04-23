@@ -93,14 +93,14 @@ initial begin
     end
   end
 
-  $write("Input Matrix: \n\n");
-  for (int i=0; i<SIZE; i=i+1) begin
-    for (int j=0; j<SIZE; j=j+1) begin
+  $write("Input Matrix: \n");
+  for (int i=0; i<3; i=i+1) begin
+    for (int j=0; j<3; j=j+1) begin
       a = $bitstoreal(Matrix[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
       b = $bitstoreal(Matrix[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
       $write("(%f + j%f)",a,b);
-      if (j == SIZE-1) begin
-        $write("\n");
+      if (j == 3-1) begin
+        $write("\n\n");
       end
     end
   end
@@ -144,55 +144,55 @@ wait(triang_inv_in_ready_o == 1);
 
 Linv = Inv;
 
-$write("Output L Matrix: \n\n");
+$write("Output L Matrix: \n");
 
-for (int i=0; i<SIZE; i=i+1) begin
-  for (int j=0; j<SIZE; j=j+1) begin
+for (int i=0; i<3; i=i+1) begin
+  for (int j=0; j<3; j=j+1) begin
     a = $bitstoreal(L[j][i*2*WIDTH + WIDTH-1 -: WIDTH]);
     b = $bitstoreal(L[j][i*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
     $write("(%f + j%f)",a,b);
-    if (j == SIZE-1) begin
-      $write("\n");
+    if (j == 3-1) begin
+      $write("\n\n");
     end
   end
 end
 
-$write("Output U Matrix: \n\n");
+$write("Output U Matrix: \n");
 
-for (int i=0; i<SIZE; i=i+1) begin
-  for (int j=0; j<SIZE; j=j+1) begin
+for (int i=0; i<3; i=i+1) begin
+  for (int j=0; j<3; j=j+1) begin
     a = $bitstoreal(U[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
     b = $bitstoreal(U[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
     $write("(%f + j%f)",a,b);
-    if (j == SIZE-1) begin
-      $write("\n");
+    if (j == 3-1) begin
+      $write("\n\n");
     end
   end
 end
 
-$write("L Inverse Matrix: \n\n");
+$write("L Inverse Matrix: \n");
 
-for (int i=0; i<SIZE; i=i+1) begin
-  for (int j=0; j<SIZE; j=j+1) begin
+for (int i=0; i<3; i=i+1) begin
+  for (int j=0; j<3; j=j+1) begin
     a = $bitstoreal(Linv[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
     b = $bitstoreal(Linv[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
     $write("(%f + j%f)",a,b);
-    if (j == SIZE-1) begin
-      $write("\n");
+    if (j == 3-1) begin
+      $write("\n\n");
     end
   end
 end
 
 
-$write("U Inverse Matrix: \n\n");
+$write("U Inverse Matrix: \n");
 
-for (int i=0; i<SIZE; i=i+1) begin
-  for (int j=0; j<SIZE; j=j+1) begin
+for (int i=0; i<3; i=i+1) begin
+  for (int j=0; j<3; j=j+1) begin
     a = $bitstoreal(Uinv[j][i*2*WIDTH + WIDTH-1 -: WIDTH]);
     b = $bitstoreal(Uinv[j][i*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
     $write("(%f + j%f)",a,b);
-    if (j == SIZE-1) begin
-      $write("\n");
+    if (j == 3-1) begin
+      $write("\n\n");
     end
   end
 end
@@ -214,14 +214,14 @@ for (int i=0; i<SIZE; i=i+1) begin
   end
 end
 
-$write("Inverse: \n\n");
-for (int i=0; i<SIZE; i=i+1) begin
-  for (int j=0; j<SIZE; j=j+1) begin
+$write("Inverse: \n");
+for (int i=0; i<3; i=i+1) begin
+  for (int j=0; j<3; j=j+1) begin
     a = inverse[i][2*j];
     b = inverse[i][2*j+1];
     $write("(%f + j%f)",a,b);
-    if (j == SIZE-1) begin
-      $write("\n");
+    if (j == 3-1) begin
+      $write("\n\n");
     end
   end
 end
@@ -241,14 +241,14 @@ for (int i=0; i<SIZE; i=i+1) begin
   end
 end
 
-$write("Product: \n\n");
-for (int i=0; i<SIZE; i=i+1) begin
-  for (int j=0; j<SIZE; j=j+1) begin
+$write("Product: \n");
+for (int i=0; i<3; i=i+1) begin
+  for (int j=0; j<3; j=j+1) begin
     a = product[i][2*j];
     b = product[i][2*j+1];
     $write("(%f + j%f)",a,b);
-    if (j == SIZE-1) begin
-      $write("\n");
+    if (j == 3-1) begin
+      $write("\n\n");
     end
   end
 end
