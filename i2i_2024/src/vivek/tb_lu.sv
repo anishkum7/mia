@@ -65,8 +65,8 @@ initial begin
   end
 
   $write("Input Matrix: \n\n");
-  for (int i=0; i<SIZE; i=i+1) begin
-    for (int j=0; j<SIZE; j=j+1) begin
+  for (int i=0; i<3; i=i+1) begin
+    for (int j=0; j<3; j=j+1) begin
       a = $bitstoreal(Matrix[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
       b = $bitstoreal(Matrix[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
       $write("(%f + j%f)",a,b);
@@ -96,8 +96,8 @@ wait(in_ready_o == 1);
 
 $write("Output L Matrix: \n\n");
 
-for (int i=0; i<SIZE; i=i+1) begin
-  for (int j=0; j<SIZE; j=j+1) begin
+for (int i=0; i<3; i=i+1) begin
+  for (int j=0; j<3; j=j+1) begin
     a = $bitstoreal(L[j][i*2*WIDTH + WIDTH-1 -: WIDTH]);
     b = $bitstoreal(L[j][i*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
     $write("(%f + j%f)",a,b);
@@ -109,8 +109,8 @@ end
 
 $write("Output U Matrix: \n\n");
 
-for (int i=0; i<SIZE; i=i+1) begin
-  for (int j=0; j<SIZE; j=j+1) begin
+for (int i=0; i<3; i=i+1) begin
+  for (int j=0; j<3; j=j+1) begin
     a = $bitstoreal(U[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
     b = $bitstoreal(U[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
     $write("(%f + j%f)",a,b);
@@ -136,8 +136,8 @@ for (int i=0; i<SIZE; i=i+1) begin
 end
 
 $write("Product: \n\n");
-for (int i=0; i<SIZE; i=i+1) begin
-  for (int j=0; j<SIZE; j=j+1) begin
+for (int i=0; i<3; i=i+1) begin
+  for (int j=0; j<3; j=j+1) begin
     a = product[i][2*j];
     b = product[i][2*j+1];
     $write("(%f + j%f)",a,b);
