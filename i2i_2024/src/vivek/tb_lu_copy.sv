@@ -31,10 +31,30 @@ localparam NUM_OPERANDS=4,
 
   logic                              busy_o;
 
+  logic [SIZE-1:0][2*64-1:0]          triang_inv_mat_row_i; // {b1,a1}
+  logic                               triang_inv_mat_row_valid_i;
+  logic [$clog2(SIZE)-1:0]            triang_inv_mat_row_addr_i;
+  logic [$clog2(SIZE)-1:0]           triang_inv_mat_row_addr_o;
+  logic                              triang_inv_mat_row_addr_valid_o;
+  
+  logic [SIZE*2-1:0][63:0]          triang_inv_inv_col_o; // {b1,a1}
+  logic [$clog2(SIZE)-1:0]          triang_inv_inv_col_addr_o;
+  logic                             triang_inv_inv_col_valid_o;
+
+  logic                              triang_inv_in_ready_o;
+  logic                              triang_inv_start;
+  logic                              triang_inv_out_ready_i;
+
+  logic                              triang_inv_busy_o;
+
 
 logic [SIZE-1:0][SIZE*2*WIDTH-1:0] Matrix;
 logic [SIZE-1:0][SIZE*2*WIDTH-1:0] L;
 logic [SIZE-1:0][SIZE*2*WIDTH-1:0] U;
+logic [SIZE-1:0][SIZE*2*WIDTH-1:0] Linv;
+logic [SIZE-1:0][SIZE*2*WIDTH-1:0] Uinv;
+logic [SIZE-1:0][SIZE*2*WIDTH-1:0] Inv;
+
 
 real product [SIZE-1:0][2*SIZE-1:0];
 
@@ -85,14 +105,32 @@ initial begin
 rst_ni = 0;
 flush_i = 0;
 start = 0;
+triang_inv_start = 0;
 #35
 result_out_ready_i = 1;
 mat_row_out_ready_i = 1;
+triang_inv_out_ready_i = 1;
 rst_ni = 1;
 start = 1;
 #20
 start = 0;
 wait(in_ready_o == 1);
+
+Matrix = L;
+#5
+triang_inv_start = 1;
+#20
+triang_inv_start = 0;
+wait(triang_inv_in_ready_o == 1);
+
+Matrix = U;
+#5
+triang_inv_start = 1;
+#20
+triang_inv_start = 0;
+wait(triang_inv_in_ready_o == 1);
+
+
 
 $write("Output L Matrix: \n\n");
 
@@ -152,7 +190,7 @@ $finish;
 end
 
 initial begin
-#10000
+#900000
 $finish;
 end
 
@@ -167,6 +205,14 @@ always @ (posedge clk_i) begin
   if (result_valid_o) begin
     L[result_addr_o] <= l_col_o;
     U[result_addr_o] <= u_row_o;
+  end
+
+  triang_inv_mat_row_i <= Matrix[triang_inv_mat_row_addr_o];
+  triang_inv_mat_row_addr_i <= triang_inv_mat_row_addr_o;
+  triang_inv_mat_row_valid_i <= triang_inv_mat_row_addr_valid_o;
+
+  if (triang_inv_inv_col_valid_o) begin
+    Inv[triang_inv_inv_col_addr_o] <= triang_inv_inv_col_o;
   end
 
 end
@@ -204,6 +250,31 @@ lu
   //input  logic                              out_ready_i,
 
   .busy_o(busy_o)
+
+);
+
+triang_matrix_inv
+#(
+  .SIZE(SIZE)
+ )
+ DUT
+(
+  .clk_i(clk_i),
+  .rst_ni(rst_ni),
+
+  .mat_row_i(triang_inv_mat_row_i), // {b1,a1}
+  .mat_row_valid_i(triang_inv_mat_row_valid_i),
+  .mat_row_addr_i(triang_inv_mat_row_addr_i),
+  .mat_row_addr_o(triang_inv_mat_row_addr_o),
+  .mat_row_addr_valid_o(triang_inv_mat_row_addr_valid_o),
+  .inv_col_o(triang_inv_inv_col_o), // {b1,a1}
+  .inv_col_addr_o(triang_inv_inv_col_addr_o),
+  .inv_col_valid_o(triang_inv_inv_col_valid_o),
+  .in_ready_o(triang_inv_in_ready_o),
+  .flush_i(flush_i),
+  .start(triang_inv_start),
+  .out_ready_i(triang_inv_out_ready_i),
+  .busy_o(triang_inv_busy_o)
 
 );
 
