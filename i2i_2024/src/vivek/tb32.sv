@@ -292,6 +292,7 @@ lu_start = 1;
 lu_start = 0;
 
 wait(lu_in_ready_o == 1);
+$display("lu_ready = %d", lu_in_ready_o);
 
 U3 = U;
 
