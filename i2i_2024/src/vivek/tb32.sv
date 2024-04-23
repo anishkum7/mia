@@ -369,7 +369,7 @@ $finish;
 end
 
 initial begin
-#30000
+#90000
 $finish;
 end
 
