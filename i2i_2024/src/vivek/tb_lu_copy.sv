@@ -135,7 +135,7 @@ wait(triang_inv_in_ready_o == 1);
 Uinv = Inv;
 Matrix = L;
 rst_ni = 0;
-#5
+#35
 rst_ni = 1;
 triang_inv_start = 1;
 #20
