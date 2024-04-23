@@ -78,7 +78,7 @@ initial begin
         b = $itor($urandom_range(0,2000));
         b = (b-1000)/100;
 
-        b = 0;
+        //b = 0;
         // Make sure diagonal elements are non-zero
         if (i == j && a == 0)
           a = 1; // Set a non-zero value for the diagonal
