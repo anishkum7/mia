@@ -446,7 +446,7 @@ triang_matrix_inv
   .flush_i(triang_inv_flush_i),
   .start(triang_inv_start),
   .out_ready_i(triang_inv_out_ready_i),
-  .busy_otriang_inv_(busy_o)
+  .busy_o(triang_inv_busy_o)
 
 );
 
