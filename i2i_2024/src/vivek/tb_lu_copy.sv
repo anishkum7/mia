@@ -56,6 +56,8 @@ logic [SIZE-1:0][SIZE*2*WIDTH-1:0] Uinv;
 logic [SIZE-1:0][SIZE*2*WIDTH-1:0] Inv;
 
 
+real input_mat [SIZE-1:0][2*SIZE-1:0];
+real inverse [SIZE-1:0][2*SIZE-1:0];
 real product [SIZE-1:0][2*SIZE-1:0];
 
 real expected_real, expected_imaginary;
@@ -80,6 +82,9 @@ initial begin
         // Assign values to the matrix
         Matrix[i][j*2*WIDTH + WIDTH-1 -: WIDTH] = $realtobits(a);
         Matrix[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH] = $realtobits(b);
+
+        input_mat[i][2*j] = a;
+        input_mat[i][2*j+1] = b;
 
     end
   end
@@ -189,13 +194,40 @@ end
 
 for (int i=0; i<SIZE; i=i+1) begin
   for (int j=0; j<SIZE; j=j+1) begin
-    product[i][2*j] = 0;
-    product[i][2*j+1] = 0;
+    inverse[i][2*j] = 0;
+    inverse[i][2*j+1] = 0;
     for (int k=0; k<SIZE; k=k+1) begin
       a = $bitstoreal(Uinv[k][i*2*WIDTH + WIDTH-1 -: WIDTH]);
       b = $bitstoreal(Uinv[k][i*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
       c = $bitstoreal(Linv[k][j*2*WIDTH + WIDTH-1 -: WIDTH]);
       d = $bitstoreal(Linv[k][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+      inverse[i][2*j] += a*c - b*d;
+      inverse[i][2*j+1] += a*d + b*c;
+    end
+  end
+end
+
+$write("Inverse: \n\n");
+for (int i=0; i<SIZE; i=i+1) begin
+  for (int j=0; j<SIZE; j=j+1) begin
+    a = inverse[i][2*j];
+    b = inverse[i][2*j+1];
+    $write("(%f + j%f)",a,b);
+    if (j == SIZE-1) begin
+      $write("\n");
+    end
+  end
+end
+
+for (int i=0; i<SIZE; i=i+1) begin
+  for (int j=0; j<SIZE; j=j+1) begin
+    product[i][2*j] = 0;
+    product[i][2*j+1] = 0;
+    for (int k=0; k<SIZE; k=k+1) begin
+      a = $bitstoreal(input_mat[i][2*k]);
+      b = $bitstoreal(input_mat[i][2*k+1]);
+      c = $bitstoreal(inverse[k][2*j]);
+      d = $bitstoreal(inverse[k][2*j+1]);
       product[i][2*j] += a*c - b*d;
       product[i][2*j+1] += a*d + b*c;
     end
@@ -213,6 +245,7 @@ for (int i=0; i<SIZE; i=i+1) begin
     end
   end
 end
+
 
 #20
 $finish;
