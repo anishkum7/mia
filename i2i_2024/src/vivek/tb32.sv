@@ -283,7 +283,7 @@ for (int i = 0; i < SIZE; i=i+1) begin
         Matrix3[i][j*2*WIDTH +: 2*WIDTH] = complex_add_result_o;
     end
 end
-Matrix = Matrix4;
+Matrix = Matrix3;
 
 #5
 lu_start = 1;
