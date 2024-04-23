@@ -422,7 +422,7 @@ lu
   .result_out_ready_i(lu_result_out_ready_i),
 
   .in_ready_o(lu_in_ready_o),
-  .flush_i(lu_flush_i),
+  .flush_i(flush_i),
   .start(lu_start),
   //input  logic                              out_ready_i,
 
@@ -448,7 +448,7 @@ triang_matrix_inv
   .inv_col_addr_o(triang_inv_inv_col_addr_o),
   .inv_col_valid_o(triang_inv_inv_col_valid_o),
   .in_ready_o(triang_inv_in_ready_o),
-  .flush_i(triang_inv_flush_i),
+  .flush_i(flush_i),
   .start(triang_inv_start),
   .out_ready_i(triang_inv_out_ready_i),
   .busy_o(triang_inv_busy_o)
