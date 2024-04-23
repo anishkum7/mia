@@ -2,7 +2,7 @@ module tb_lu;
 
 localparam NUM_OPERANDS=4,
             WIDTH = 64,
-            SIZE = 16;
+            SIZE = 32;
 
   logic                               clk_i;
   logic                               rst_ni;
@@ -64,14 +64,14 @@ initial begin
     end
   end
 
-  $write("Input Matrix: \n\n");
+  $write("Input Matrix: \n");
   for (int i=0; i<3; i=i+1) begin
     for (int j=0; j<3; j=j+1) begin
       a = $bitstoreal(Matrix[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
       b = $bitstoreal(Matrix[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
       $write("(%f + j%f)",a,b);
       if (j == 3-1) begin
-        $write("\n");
+        $write("\n\n");
       end
     end
   end
@@ -94,7 +94,7 @@ start = 1;
 start = 0;
 wait(in_ready_o == 1);
 
-$write("Output L Matrix: \n\n");
+$write("Output L Matrix: \n");
 
 for (int i=0; i<3; i=i+1) begin
   for (int j=0; j<3; j=j+1) begin
@@ -102,12 +102,12 @@ for (int i=0; i<3; i=i+1) begin
     b = $bitstoreal(L[j][i*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
     $write("(%f + j%f)",a,b);
     if (j == 3-1) begin
-      $write("\n");
+      $write("\n\n");
     end
   end
 end
 
-$write("Output U Matrix: \n\n");
+$write("Output U Matrix: \n");
 
 for (int i=0; i<3; i=i+1) begin
   for (int j=0; j<3; j=j+1) begin
@@ -115,7 +115,7 @@ for (int i=0; i<3; i=i+1) begin
     b = $bitstoreal(U[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
     $write("(%f + j%f)",a,b);
     if (j == 3-1) begin
-      $write("\n");
+      $write("\n\n");
     end
   end
 end
@@ -135,14 +135,14 @@ for (int i=0; i<SIZE; i=i+1) begin
   end
 end
 
-$write("Product: \n\n");
+$write("Product: \n");
 for (int i=0; i<3; i=i+1) begin
   for (int j=0; j<3; j=j+1) begin
     a = product[i][2*j];
     b = product[i][2*j+1];
     $write("(%f + j%f)",a,b);
     if (j == 3-1) begin
-      $write("\n");
+      $write("\n\n");
     end
   end
 end
