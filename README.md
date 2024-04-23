@@ -4,36 +4,23 @@ Complex Matrix Inversion Accelerator
 
 ## Table of Contents
 
-- [Installation](#installation)
+- [Submodules](#submodules)
 - [Usage](#usage)
-- [Features](#features)
-- [Contributing](#contributing)
-- [License](#license)
 
-## Installation
+## Submodules
 
-Instructions on how to install and set up the project. Include any dependencies that need to be installed and how to install them.
+- i2i_2024
+  - src
+    - vivek
+      - complex_add.sv
+      - complex_div.sv
+      - complex_matrix_add.sv
+      - complex_matrix_mul.sv
+      - complex_mul.sv
+      - lu.sv
+      - triang_matrix_inv.sv
+      - triang_matrix_inv_lower.sv
 
 ## Usage
 
-Instructions on how to use the project. Provide examples or code snippets if applicable.
-
-## Features
-
-List of features or functionalities of the project.
-
-## Contributing
-
-Guidelines for contributing to the project. Include information on how to report issues, how to propose changes, and any coding standards to follow.
-
-## License
-
-Information about the project's license. Include the type of license (e.g., MIT, Apache) and any additional terms or conditions.
-
-## Credits
-
-Acknowledgments and credits for any resources, tools, or individuals who contributed to the project.
-
-## Contact
-
-Contact information for the project maintainer or team.
+Commands to use the project.
