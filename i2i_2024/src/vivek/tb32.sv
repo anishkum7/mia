@@ -198,6 +198,7 @@ lu_result_out_ready_i = 1;
 lu_mat_row_out_ready_i = 1;
 triang_inv_out_ready_i = 1;
 complex_matrix_mul_out_ready_i = 1;
+complex_add_out_ready_i = 1;
 
 rst_ni = 1;
 
@@ -367,8 +368,8 @@ end
 
 always @ (posedge clk_i) begin
   
-  if (lu_in_ready_o)
-    $display("lu_ready = %d", lu_in_ready_o);
+  if (lu_mat_row_valid_o)
+    $display("lu_ready = %d", lu_mat_row_valid_o);
 
   lu_mat_row_i <= Matrix[lu_mat_row_read_addr_o];
   lu_mat_row_read_addr_i <= lu_mat_row_read_addr_o;
