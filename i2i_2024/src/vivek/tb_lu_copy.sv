@@ -57,6 +57,9 @@ logic [SIZE-1:0][SIZE*2*WIDTH-1:0] Inv;
 
 
 real input_mat [SIZE-1:0][2*SIZE-1:0];
+
+real l_inv [SIZE-1:0][2*SIZE-1:0];
+real u_inv [SIZE-1:0][2*SIZE-1:0];
 real inverse [SIZE-1:0][2*SIZE-1:0];
 real product [SIZE-1:0][2*SIZE-1:0];
 
@@ -122,14 +125,6 @@ start = 1;
 start = 0;
 wait(in_ready_o == 1);
 
-Matrix = L;
-#5
-triang_inv_start = 1;
-#20
-triang_inv_start = 0;
-wait(triang_inv_in_ready_o == 1);
-
-Linv = Inv;
 Matrix = U;
 #5
 triang_inv_start = 1;
@@ -138,6 +133,14 @@ triang_inv_start = 0;
 wait(triang_inv_in_ready_o == 1);
 
 Uinv = Inv;
+Matrix = L;
+#5
+triang_inv_start = 1;
+#20
+triang_inv_start = 0;
+wait(triang_inv_in_ready_o == 1);
+
+Linv = Inv;
 
 $write("Output L Matrix: \n\n");
 
@@ -177,6 +180,7 @@ for (int i=0; i<SIZE; i=i+1) begin
     end
   end
 end
+
 
 $write("U Inverse Matrix: \n\n");
 
