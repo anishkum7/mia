@@ -70,7 +70,7 @@ initial begin
       a = $bitstoreal(Matrix[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
       b = $bitstoreal(Matrix[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
       $write("(%f + j%f)",a,b);
-      if (j == SIZE-1) begin
+      if (j == 3-1) begin
         $write("\n");
       end
     end
@@ -101,7 +101,7 @@ for (int i=0; i<3; i=i+1) begin
     a = $bitstoreal(L[j][i*2*WIDTH + WIDTH-1 -: WIDTH]);
     b = $bitstoreal(L[j][i*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
     $write("(%f + j%f)",a,b);
-    if (j == SIZE-1) begin
+    if (j == 3-1) begin
       $write("\n");
     end
   end
@@ -114,7 +114,7 @@ for (int i=0; i<3; i=i+1) begin
     a = $bitstoreal(U[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
     b = $bitstoreal(U[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
     $write("(%f + j%f)",a,b);
-    if (j == SIZE-1) begin
+    if (j == 3-1) begin
       $write("\n");
     end
   end
@@ -141,7 +141,7 @@ for (int i=0; i<3; i=i+1) begin
     a = product[i][2*j];
     b = product[i][2*j+1];
     $write("(%f + j%f)",a,b);
-    if (j == SIZE-1) begin
+    if (j == 3-1) begin
       $write("\n");
     end
   end
