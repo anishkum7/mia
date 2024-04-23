@@ -292,7 +292,6 @@ lu_start = 1;
 lu_start = 0;
 
 wait(lu_in_ready_o == 1);
-$display("lu_ready = %d", lu_in_ready_o);
 
 U3 = U;
 
@@ -367,6 +366,8 @@ $finish;
 end
 
 always @ (posedge clk_i) begin
+  $display("lu_ready = %d", lu_in_ready_o);
+
   lu_mat_row_i <= Matrix[lu_mat_row_read_addr_o];
   lu_mat_row_read_addr_i <= lu_mat_row_read_addr_o;
   lu_mat_row_valid_i <= lu_mat_row_read_addr_valid_o;
