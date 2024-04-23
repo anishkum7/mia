@@ -1,0 +1,23 @@
+file1 = open("tcl_initial_lines.tcl", "r")
+initial_lines = file1.readlines()
+file1.close()
+
+file1 = open("dynamic_rom_sp_generated.tcl", "w")
+file1.writelines(initial_lines)
+file1.close()
+
+file1 = open("dynamic_rom_sp_generated.tcl", "a")
+input_file = open("input_data.txt", "r")
+numbers = [line.strip() for line in input_file.readlines()]
+for n in numbers:
+    file1.write("lappend data \""+n+"\"\n")
+file1.close()
+
+file1 = open("tcl_end_lines.tcl", "r")
+end_lines = file1.readlines()
+file1.close()
+
+file1 = open("dynamic_rom_sp_generated.tcl", "a")
+file1.write("\n")
+file1.writelines(end_lines)
+file1.close()
