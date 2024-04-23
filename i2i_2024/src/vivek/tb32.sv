@@ -250,8 +250,8 @@ for (int i = 0; i < SIZE; i=i+1) begin
         for (int k = 0; k < SIZE; k=k+1) begin
         complex_matrix_mul_operands_i[k*NUM_OPERANDS] = Linv[i][k*2*WIDTH +: WIDTH];
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+1] = Linv[i][k*2*WIDTH+WIDTH +: WIDTH];
-        complex_matrix_mul_operands_i[k*NUM_OPERANDS+2] = A1[k][j*2*WIDTH +: WIDTH];
-        complex_matrix_mul_operands_i[k*NUM_OPERANDS+3] = A1[k][j*2*WIDTH+WIDTH +: WIDTH];;  
+        complex_matrix_mul_operands_i[k*NUM_OPERANDS+2] = Matrix1[k][j*2*WIDTH +: WIDTH];
+        complex_matrix_mul_operands_i[k*NUM_OPERANDS+3] = Matrix1[k][j*2*WIDTH+WIDTH +: WIDTH];;  
         end
         U1[i][j*2*WIDTH +: 2*WIDTH] = complex_matrix_mul_result_o;
     end
@@ -261,8 +261,8 @@ for (int i = 0; i < SIZE; i=i+1) begin
     for (int j = 0; j < SIZE; j=j+1) begin
         @ (posedge clk_i);
         for (int k = 0; k < SIZE; k=k+1) begin
-        complex_matrix_mul_operands_i[k*NUM_OPERANDS] = A2[i][k*2*WIDTH +: WIDTH];
-        complex_matrix_mul_operands_i[k*NUM_OPERANDS+1] = A2[i][k*2*WIDTH+WIDTH +: WIDTH];
+        complex_matrix_mul_operands_i[k*NUM_OPERANDS] = Matrix2[i][k*2*WIDTH +: WIDTH];
+        complex_matrix_mul_operands_i[k*NUM_OPERANDS+1] = Matrix2[i][k*2*WIDTH+WIDTH +: WIDTH];
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+2] = Uinv[j][k*2*WIDTH +: WIDTH];
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+3] = Uinv[j][k*2*WIDTH+WIDTH +: WIDTH];;  
         end
@@ -279,11 +279,11 @@ for (int i = 0; i < SIZE; i=i+1) begin
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+2] = U1[k][j*2*WIDTH +: WIDTH];
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+3] = U1[k][j*2*WIDTH+WIDTH +: WIDTH];;  
         end
-        complex_add_operands_i = {complex_matrix_mul_result_o, A3[i][j*2*WIDTH +: 2*WIDTH]};
-        A3[i][j*2*WIDTH +: 2*WIDTH] = complex_result_o' 
+        complex_add_operands_i = {complex_matrix_mul_result_o, Matrix3[i][j*2*WIDTH +: 2*WIDTH]};
+        Matrix3[i][j*2*WIDTH +: 2*WIDTH] = complex_result_o 
     end
 end
-Matrix = A4;
+Matrix = Matrix4;
 
 #5
 lu_start = 1;
