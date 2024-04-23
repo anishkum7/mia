@@ -150,8 +150,8 @@ triang_matrix_inv
  )
  DUT
 (
-  .clk_i,
-  .rst_ni,
+  .clk_i(clk_i),
+  .rst_ni(rst_ni),
 
   .mat_row_i(mat_row_i), // {b1,a1}
   .mat_row_valid_i(mat_row_valid_i),
