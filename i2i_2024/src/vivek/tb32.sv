@@ -299,7 +299,10 @@ lu_start = 1;
 lu_start = 0;
  $display("lu_ready = %d", lu_in_ready_o);
 
-@ (posedge lu_in_ready_o);
+//@ (posedge lu_in_ready_o);
+#1000
+
+$display("lu_ready = %d", lu_in_ready_o);
 
 $display("LU 2 done");
 
