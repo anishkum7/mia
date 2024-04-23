@@ -73,7 +73,7 @@ initial begin
         a = (a-1000)/100;
 
         b = $itor($urandom_range(0,2000));
-        b = (a-1000)/100;
+        b = (b-1000)/100;
 
         b = 0;
         // Make sure diagonal elements are non-zero
