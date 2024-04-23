@@ -246,7 +246,7 @@ Uinv = InvMatrix;
 
 for (int i = 0; i < SIZE; i=i+1) begin
     for (int j = 0; j < SIZE; j=j+1) begin
-        @ (posedge);
+        @ (posedge clk_i);
         for (int k = 0; k < SIZE; k=k+1) begin
         complex_matrix_mul_operands_i[k*NUM_OPERANDS] = Linv[i][k*2*WIDTH +: WIDTH];
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+1] = Linv[i][k*2*WIDTH+WIDTH +: WIDTH];
@@ -259,7 +259,7 @@ end
 
 for (int i = 0; i < SIZE; i=i+1) begin
     for (int j = 0; j < SIZE; j=j+1) begin
-        @ (posedge);
+        @ (posedge clk_i);
         for (int k = 0; k < SIZE; k=k+1) begin
         complex_matrix_mul_operands_i[k*NUM_OPERANDS] = A2[i][k*2*WIDTH +: WIDTH];
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+1] = A2[i][k*2*WIDTH+WIDTH +: WIDTH];
@@ -272,7 +272,7 @@ end
 
 for (int i = 0; i < SIZE; i=i+1) begin
     for (int j = 0; j < SIZE; j=j+1) begin
-        @ (posedge);
+        @ (posedge clk_i);
         for (int k = 0; k < SIZE; k=k+1) begin
         complex_matrix_mul_operands_i[k*NUM_OPERANDS] = L2[i][k*2*WIDTH +: WIDTH];
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+1] = L2[i][k*2*WIDTH+WIDTH +: WIDTH];
