@@ -224,10 +224,10 @@ for (int i=0; i<SIZE; i=i+1) begin
     product[i][2*j] = 0;
     product[i][2*j+1] = 0;
     for (int k=0; k<SIZE; k=k+1) begin
-      a = $bitstoreal(input_mat[i][2*k]);
-      b = $bitstoreal(input_mat[i][2*k+1]);
-      c = $bitstoreal(inverse[k][2*j]);
-      d = $bitstoreal(inverse[k][2*j+1]);
+      a = input_mat[i][2*k];
+      b = input_mat[i][2*k+1];
+      c = inverse[k][2*j];
+      d = inverse[k][2*j+1];
       product[i][2*j] += a*c - b*d;
       product[i][2*j+1] += a*d + b*c;
     end
