@@ -377,8 +377,8 @@ end
 
 always @ (posedge clk_i) begin
   
-  if (lu_in_ready_o)
-    $display("lu_ready = %d", lu_in_ready_o);
+  // if (lu_in_ready_o)
+  //   $display("lu_ready = %d", lu_in_ready_o);
 
   lu_mat_row_i <= Matrix[lu_mat_row_read_addr_o];
   lu_mat_row_read_addr_i <= lu_mat_row_read_addr_o;
