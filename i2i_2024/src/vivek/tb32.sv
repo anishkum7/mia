@@ -291,11 +291,13 @@ for (int i = 0; i < SIZE; i=i+1) begin
 end
 Matrix = Matrix3;
 
+ $display("lu_ready = %d", lu_in_ready_o);
 #5
 lu_start = 1;
 
 #20
 lu_start = 0;
+ $display("lu_ready = %d", lu_in_ready_o);
 
 wait(lu_in_ready_o == 1);
 
