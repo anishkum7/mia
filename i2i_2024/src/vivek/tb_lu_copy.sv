@@ -123,6 +123,7 @@ triang_inv_start = 1;
 triang_inv_start = 0;
 wait(triang_inv_in_ready_o == 1);
 
+Linv = Inv;
 Matrix = U;
 #5
 triang_inv_start = 1;
@@ -130,7 +131,7 @@ triang_inv_start = 1;
 triang_inv_start = 0;
 wait(triang_inv_in_ready_o == 1);
 
-
+Uinv = Inv;
 
 $write("Output L Matrix: \n\n");
 
@@ -158,15 +159,43 @@ for (int i=0; i<SIZE; i=i+1) begin
   end
 end
 
+$write("L Inverse Matrix: \n\n");
+
+for (int i=0; i<SIZE; i=i+1) begin
+  for (int j=0; j<SIZE; j=j+1) begin
+    a = $bitstoreal(Linv[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
+    b = $bitstoreal(Linv[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+    $write("(%f + j%f)",a,b);
+    if (j == SIZE-1) begin
+      $write("\n");
+    end
+  end
+end
+
+$write("U Inverse Matrix: \n\n");
+
+for (int i=0; i<SIZE; i=i+1) begin
+  for (int j=0; j<SIZE; j=j+1) begin
+    a = $bitstoreal(Uinv[j][i*2*WIDTH + WIDTH-1 -: WIDTH]);
+    b = $bitstoreal(Uinv[j][i*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+    $write("(%f + j%f)",a,b);
+    if (j == SIZE-1) begin
+      $write("\n");
+    end
+  end
+end
+
+
+
 for (int i=0; i<SIZE; i=i+1) begin
   for (int j=0; j<SIZE; j=j+1) begin
     product[i][2*j] = 0;
     product[i][2*j+1] = 0;
     for (int k=0; k<SIZE; k=k+1) begin
-      a = $bitstoreal(L[k][i*2*WIDTH + WIDTH-1 -: WIDTH]);
-      b = $bitstoreal(L[k][i*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
-      c = $bitstoreal(U[k][j*2*WIDTH + WIDTH-1 -: WIDTH]);
-      d = $bitstoreal(U[k][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+      a = $bitstoreal(Uinv[k][i*2*WIDTH + WIDTH-1 -: WIDTH]);
+      b = $bitstoreal(Uinv[k][i*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+      c = $bitstoreal(Linv[k][j*2*WIDTH + WIDTH-1 -: WIDTH]);
+      d = $bitstoreal(Linv[k][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
       product[i][2*j] += a*c - b*d;
       product[i][2*j+1] += a*d + b*c;
     end
