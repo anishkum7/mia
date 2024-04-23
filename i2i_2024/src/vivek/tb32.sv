@@ -209,6 +209,8 @@ lu_start = 0;
 
 wait(lu_in_ready_o == 1);
 
+$display("LU 1 done");
+
 //L0 = L;
 U0 = U;
 
@@ -232,6 +234,8 @@ triang_inv_start = 0;
 
 wait(triang_inv_in_ready_o == 1);
 
+$display("TRIANG INV 1 done");
+
 Linv = InvMatrix;
 Matrix = U;
 #5
@@ -242,6 +246,7 @@ triang_inv_start = 1;
 triang_inv_start = 0;
 
 wait(triang_inv_in_ready_o == 1);
+$display("TRIANG INV 2 done");
 
 Uinv = InvMatrix;
 
@@ -293,6 +298,8 @@ lu_start = 1;
 lu_start = 0;
 
 wait(lu_in_ready_o == 1);
+
+$display("LU 2 done");
 
 U3 = U;
 
@@ -368,8 +375,8 @@ end
 
 always @ (posedge clk_i) begin
   
-  if (lu_mat_row_valid_o)
-    $display("lu_ready = %d", lu_mat_row_valid_o);
+  // if (lu_in_ready_o)
+  //   $display("lu_ready = %d", lu_in_ready_o);
 
   lu_mat_row_i <= Matrix[lu_mat_row_read_addr_o];
   lu_mat_row_read_addr_i <= lu_mat_row_read_addr_o;
