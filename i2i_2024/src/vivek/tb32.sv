@@ -59,13 +59,13 @@ logic                              complex_matrix_mul_out_valid_o;
 logic                              complex_matrix_mul_out_ready_i;
 logic                              complex_matrix_mul_busy_o;
 
-logic                              complex_matrix_add_in_valid_i;
-logic                              complex_matrix_add_in_ready_o;
-logic [NUM_OPERANDS-1:0][WIDTH-1:0] complex_matrix_add_operands_i;
-logic [1:0][WIDTH-1:0]             complex_matrix_add_result_o;
-logic                              complex_matrix_add_out_valid_o;
-logic                              complex_matrix_add_out_ready_i;
-logic                              complex_matrix_add_busy_o;
+logic                              complex_add_in_valid_i;
+logic                              complex_add_in_ready_o;
+logic [NUM_OPERANDS-1:0][WIDTH-1:0] complex_add_operands_i;
+logic [1:0][WIDTH-1:0]             complex_add_result_o;
+logic                              complex_add_out_valid_o;
+logic                              complex_add_out_ready_i;
+logic                              complex_add_busy_o;
 
 
 
@@ -280,7 +280,7 @@ for (int i = 0; i < SIZE; i=i+1) begin
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+3] = U1[k][j*2*WIDTH+WIDTH +: WIDTH];;  
         end
         complex_add_operands_i = {complex_matrix_mul_result_o, Matrix3[i][j*2*WIDTH +: 2*WIDTH]};
-        Matrix3[i][j*2*WIDTH +: 2*WIDTH] = complex_result_o 
+        Matrix3[i][j*2*WIDTH +: 2*WIDTH] = complex_add_result_o 
     end
 end
 Matrix = Matrix4;
