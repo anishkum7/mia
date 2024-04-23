@@ -1,6 +1,6 @@
-# Project Name
+# Complex Matrix Inversion Accelerator
 
-Complex Matrix Inversion Accelerator
+RTL for Complex Matrix Inversion Accelerator
 
 ## Table of Contents
 
