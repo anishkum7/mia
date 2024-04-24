@@ -302,7 +302,7 @@ lu_start = 1;
 
 #20
 lu_start = 0;
- $display("lu_ready = %d", lu_in_ready_o);
+$display("lu_ready = %d", lu_in_ready_o);
 
 wait(lu_in_ready_o == 1);
 //#1000
@@ -503,7 +503,7 @@ complex_add
 .in_ready_o(complex_add_in_ready_o),
 .flush_i(flush_i),
 .sub(sub),
-.result_o(complex_result_o),
+.result_o(complex_add_result_o),
 .out_valid_o(complex_add_out_valid_o),
 .out_ready_i(complex_out_ready_i),
 .busy_o(complex_add_busy_o)
