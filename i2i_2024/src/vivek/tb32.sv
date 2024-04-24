@@ -328,6 +328,8 @@ for (int i = 0; i < SIZE; i=i+1) begin
         complex_add_operands_i = {complex_matrix_mul_result_o, Matrix3[i][j*2*WIDTH +: 2*WIDTH]};
         @ (negedge clk_i);
         $display("%f-%f =%f",$bitstoreal(Matrix3[i][j*2*WIDTH+:WIDTH]),$bitstoreal(complex_matrix_mul_result_o[0+:WIDTH]),$bitstoreal(complex_add_result_o[0+:WIDTH]));
+        $display("%f-%f =%f",$bitstoreal(complex_add_operands_i[0+:WIDTH]),$bitstoreal(complex_add_operands_i[2*WIDTH+:WIDTH]),$bitstoreal(complex_add_result_o[0+:WIDTH]));
+        
         Matrix3[i][j*2*WIDTH +: 2*WIDTH] = complex_add_result_o;
     end
 end
