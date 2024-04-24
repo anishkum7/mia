@@ -380,6 +380,9 @@ end
 
 initial begin
 #100000
+for (int i=0; i<SIZE; i=i+1) begin
+  $display("%x",Matrix3[i]);
+end
 $finish;
 end
 
