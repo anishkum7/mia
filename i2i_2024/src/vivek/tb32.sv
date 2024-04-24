@@ -444,10 +444,10 @@ for (int i=0; i<2*SIZE; i=i+1) begin
     product[i][2*j] = 0;
     product[i][2*j+1] = 0;
     for (int k=0; k<SIZE; k=k+1) begin
-      a = outputl[i][2*j];
-      b = outputl[i][2*j+1];
-      c = outputu[i][2*j];
-      d = outputu[i][2*j+1];
+      a = outputl[i][2*k];
+      b = outputl[i][2*k+1];
+      c = outputu[k][2*j];
+      d = outputu[k][2*j+1];
       product[i][2*j] += a*c - b*d;
       product[i][2*j+1] += a*d + b*c;
     end
@@ -457,8 +457,8 @@ end
 $write("Input: \n\n");
 for (int i=0; i<2*SIZE; i=i+1) begin
   for (int j=0; j<2*SIZE; j=j+1) begin
-    a = outputl[i][2*j];
-    b = outputl[i][2*j+1];
+    a = input_mat[i][2*j];
+    b = input_mat[i][2*j+1];
     $write("(%f + j%f)",a,b);
     if (j == 2*SIZE-1) begin
       $write("\n");
@@ -470,8 +470,8 @@ end
 $write("Product: \n\n");
 for (int i=0; i<2*SIZE; i=i+1) begin
   for (int j=0; j<2*SIZE; j=j+1) begin
-    a = outputu[i][2*j];
-    b = outputu[i][2*j+1];
+    a = product[i][2*j];
+    b = product[i][2*j+1];
     $write("(%f + j%f)",a,b);
     if (j == 2*SIZE-1) begin
       $write("\n");
