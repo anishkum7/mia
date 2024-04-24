@@ -327,6 +327,7 @@ for (int i = 0; i < SIZE; i=i+1) begin
         end
         complex_add_operands_i = {complex_matrix_mul_result_o, Matrix3[i][j*2*WIDTH +: 2*WIDTH]};
         @ (negedge clk_i);
+        $display("%f-%f",$bitstoreal(Matrix3[i][j*2*WIDTH+:WIDTH]),$bitstoreal(complex_matrix_mul_result_o[0+:WIDTH]));
         Matrix3[i][j*2*WIDTH +: 2*WIDTH] = complex_add_result_o;
     end
 end
