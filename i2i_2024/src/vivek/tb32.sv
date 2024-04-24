@@ -499,13 +499,13 @@ complex_add
 .clk_i(clk_i),
 .rst_ni(rst_ni),
 .operands_i(complex_add_operands_i), // {b2,a2,b1,a1}
-.in_valid_i(complex_add_in_valid_i),
+.in_valid_i(1'b1),
 .in_ready_o(complex_add_in_ready_o),
 .flush_i(flush_i),
-.sub(sub),
+.sub(1'b1),
 .result_o(complex_add_result_o),
 .out_valid_o(complex_add_out_valid_o),
-.out_ready_i(complex_out_ready_i),
+.out_ready_i(1'b1),
 .busy_o(complex_add_busy_o)
 );
 
