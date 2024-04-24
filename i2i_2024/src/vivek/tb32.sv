@@ -303,7 +303,7 @@ lu_start = 1;
 lu_start = 0;
  $display("lu_ready = %d", lu_in_ready_o);
 
-@ (posedge lu_in_ready_o);
+wait(lu_in_ready_o == 1);
 //#1000
 
 $display("lu_ready = %d", lu_in_ready_o);
@@ -378,7 +378,7 @@ $finish;
 end
 
 initial begin
-#90000
+#100000
 $finish;
 end
 
