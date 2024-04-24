@@ -305,7 +305,7 @@ lu_start = 0;
 $display("lu_ready = %d", lu_in_ready_o);
 
 for (int i=0; i<SIZE; i=i+1) begin
-  $display("%0h",Matrix3[i]);
+  $display("%0h",U1[i]);
 end
 
 wait(lu_in_ready_o == 1);
