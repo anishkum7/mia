@@ -94,7 +94,10 @@ logic [SIZE-1:0][SIZE*2*WIDTH-1:0] InvMatrix;
 logic [SIZE-1:0][SIZE*2*WIDTH-1:0] Linv;
 logic [SIZE-1:0][SIZE*2*WIDTH-1:0] Uinv;
 
-real product [SIZE-1:0][2*SIZE-1:0];
+real product [2*SIZE-1:0][2*2*SIZE-1:0];
+real input_mat [2*SIZE-1:0][2*2*SIZE-1:0];
+real outputl [2*SIZE-1:0][2*2*SIZE-1:0];
+real outputu [2*SIZE-1:0][2*2*SIZE-1:0];
 
 real expected_real, expected_imaginary;
 real a,b,c,d;
@@ -119,7 +122,8 @@ initial begin
         // Assign values to the matrix
         Matrix0[i][j*2*WIDTH + WIDTH-1 -: WIDTH] = $realtobits(a);
         Matrix0[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH] = $realtobits(b);
-
+        input_mat[i][2*j] = a;
+        input_mat[i][2*j+1] = b;
                 // Generate random real and imaginary parts
         a = $itor($urandom_range(0,2000));
         a = (a-1000)/100;
@@ -134,6 +138,8 @@ initial begin
         // Assign values to the matrix
         Matrix1[i][j*2*WIDTH + WIDTH-1 -: WIDTH] = $realtobits(a);
         Matrix1[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH] = $realtobits(b);
+        input_mat[i][2*(j+SIZE)] = a;
+        input_mat[i][2*(j+SIZE)+1] = b;
 
                 // Generate random real and imaginary parts
         a = $itor($urandom_range(0,2000));
@@ -149,6 +155,8 @@ initial begin
         // Assign values to the matrix
         Matrix2[i][j*2*WIDTH + WIDTH-1 -: WIDTH] = $realtobits(a);
         Matrix2[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH] = $realtobits(b);
+        input_mat[i+SIZE][2*j] = a;
+        input_mat[i+SIZE][2*j+1] = b;
 
                 // Generate random real and imaginary parts
         a = $itor($urandom_range(0,2000));
@@ -164,6 +172,9 @@ initial begin
         // Assign values to the matrix
         Matrix3[i][j*2*WIDTH + WIDTH-1 -: WIDTH] = $realtobits(a);
         Matrix3[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH] = $realtobits(b);
+        input_mat[i+SIZE][2*(j+SIZE)] = a;
+        input_mat[i+SIZE][2*(j+SIZE)+1] = b;
+
 
     end
   end
@@ -300,7 +311,7 @@ for (int i = 0; i < SIZE; i=i+1) begin
 end
 Matrix = Matrix3;
 
- $display("lu_ready = %d", lu_in_ready_o);
+//$display("lu_ready = %d", lu_in_ready_o);
 rst_ni = 0;
 #35
 rst_ni = 1;
@@ -308,7 +319,7 @@ lu_start = 1;
 
 #20
 lu_start = 0;
-$display("lu_ready = %d", lu_in_ready_o);
+//$display("lu_ready = %d", lu_in_ready_o);
 
 // for (int i=0; i<SIZE; i=i+1) begin
 //   $display("%0h",U1[i]);
@@ -317,7 +328,7 @@ $display("lu_ready = %d", lu_in_ready_o);
 wait(lu_in_ready_o == 1);
 //#1000
 
-$display("lu_ready = %d", lu_in_ready_o);
+//$display("lu_ready = %d", lu_in_ready_o);
 
 $display("LU 2 done");
 
@@ -331,18 +342,81 @@ for (int i = 0; i < SIZE; i=i+1) begin
 end
 
 
-$write("Output L Matrix: \n\n");
+for (int i = 0; i < SIZE; i++) begin
+    for (int j = 0; j < SIZE; j++) begin
+      
 
-for (int i=0; i<SIZE; i=i+1) begin
-  for (int j=0; j<SIZE; j=j+1) begin
-    a = $bitstoreal(L[j][i*2*WIDTH + WIDTH-1 -: WIDTH]);
-    b = $bitstoreal(L[j][i*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
-    $write("(%f + j%f)",a,b);
-    if (j == SIZE-1) begin
-      $write("\n");
+
+        // Assign values to the matrix
+        a = $bitstoreal(L0[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
+        b = $bitstoreal(L0[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+        outputl[i][2*j] = a;
+        outputl[i][2*j+1] = b;
+
+        // Assign values to the matrix
+        a = $bitstoreal(L1[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
+        b = $bitstoreal(L1[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+        outputl[i][2*(j+SIZE)] = a;
+        outputl[i][2*(j+SIZE)+1] = b;
+
+
+        // Assign values to the matrix
+        a = $bitstoreal(L2[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
+        b = $bitstoreal(L2[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+        outputl[i+SIZE][2*j] = a;
+        outputl[i+SIZE][2*j+1] = b;
+
+
+        // Assign values to the matrix
+        a = $bitstoreal(L3[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
+        b = $bitstoreal(L3[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+        outputl[i+SIZE][2*(j+SIZE)] = a;
+        outputl[i+SIZE][2*(j+SIZE)+1] = b;
+
+
+        a = $bitstoreal(U0[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
+        b = $bitstoreal(U0[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+        outputu[i][2*j] = a;
+        outputu[i][2*j+1] = b;
+
+        // Assign values to the matrix
+        a = $bitstoreal(U1[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
+        b = $bitstoreal(U1[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+        outputu[i][2*(j+SIZE)] = a;
+        outputu[i][2*(j+SIZE)+1] = b;
+
+
+        // Assign values to the matrix
+        a = $bitstoreal(U2[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
+        b = $bitstoreal(U2[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+        outputu[i+SIZE][2*j] = a;
+        outputu[i+SIZE][2*j+1] = b;
+
+
+        // Assign values to the matrix
+        a = $bitstoreal(U3[i][j*2*WIDTH + WIDTH-1 -: WIDTH]);
+        b = $bitstoreal(U3[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+        outputu[i+SIZE][2*(j+SIZE)] = a;
+        outputu[i+SIZE][2*(j+SIZE)+1] = b;
+
+
     end
   end
-end
+
+
+
+// $write("Output L Matrix: \n\n");
+
+// for (int i=0; i<SIZE; i=i+1) begin
+//   for (int j=0; j<SIZE; j=j+1) begin
+//     a = $bitstoreal(L[j][i*2*WIDTH + WIDTH-1 -: WIDTH]);
+//     b = $bitstoreal(L[j][i*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
+//     $write("(%f + j%f)",a,b);
+//     if (j == SIZE-1) begin
+//       $write("\n");
+//     end
+//   end
+// end
 
 // $write("Output U Matrix: \n\n");
 
@@ -357,32 +431,45 @@ end
 //   end
 // end
 
-// for (int i=0; i<SIZE; i=i+1) begin
-//   for (int j=0; j<SIZE; j=j+1) begin
-//     product[i][2*j] = 0;
-//     product[i][2*j+1] = 0;
-//     for (int k=0; k<SIZE; k=k+1) begin
-//       a = $bitstoreal(L[k][i*2*WIDTH + WIDTH-1 -: WIDTH]);
-//       b = $bitstoreal(L[k][i*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
-//       c = $bitstoreal(U[k][j*2*WIDTH + WIDTH-1 -: WIDTH]);
-//       d = $bitstoreal(U[k][j*2*WIDTH + 2*WIDTH-1 -: WIDTH]);
-//       product[i][2*j] += a*c - b*d;
-//       product[i][2*j+1] += a*d + b*c;
-//     end
-//   end
-// end
+for (int i=0; i<2*SIZE; i=i+1) begin
+  for (int j=0; j<2*SIZE; j=j+1) begin
+    product[i][2*j] = 0;
+    product[i][2*j+1] = 0;
+    for (int k=0; k<SIZE; k=k+1) begin
+      a = outputl[i][2*j];
+      b = outputl[i][2*j+1];
+      c = outputu[i][2*j];
+      d = outputu[i][2*j+1];
+      product[i][2*j] += a*c - b*d;
+      product[i][2*j+1] += a*d + b*c;
+    end
+  end
+end
 
-// $write("Product: \n\n");
-// for (int i=0; i<SIZE; i=i+1) begin
-//   for (int j=0; j<SIZE; j=j+1) begin
-//     a = product[i][2*j];
-//     b = product[i][2*j+1];
-//     $write("(%f + j%f)",a,b);
-//     if (j == SIZE-1) begin
-//       $write("\n");
-//     end
-//   end
-// end
+$write("Input: \n\n");
+for (int i=0; i<2*SIZE; i=i+1) begin
+  for (int j=0; j<2*SIZE; j=j+1) begin
+    a = input_mat[i][2*j];
+    b = input_mat[i][2*j+1];
+    $write("(%f + j%f)",a,b);
+    if (j == SIZE-1) begin
+      $write("\n");
+    end
+  end
+end
+
+
+$write("Product: \n\n");
+for (int i=0; i<2*SIZE; i=i+1) begin
+  for (int j=0; j<2*SIZE; j=j+1) begin
+    a = product[i][2*j];
+    b = product[i][2*j+1];
+    $write("(%f + j%f)",a,b);
+    if (j == SIZE-1) begin
+      $write("\n");
+    end
+  end
+end
 
 #20
 $finish;
