@@ -100,6 +100,7 @@ real expected_real, expected_imaginary;
 real a,b,c,d;
 
 initial begin
+  $fsdbDumpvars;
   for (int i = 0; i < SIZE; i++) begin
     for (int j = 0; j < SIZE; j++) begin
       
