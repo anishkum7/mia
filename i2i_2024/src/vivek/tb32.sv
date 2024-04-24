@@ -323,10 +323,10 @@ for (int i = 0; i < SIZE; i=i+1) begin
         complex_matrix_mul_operands_i[k*NUM_OPERANDS] = L2[i][k*2*WIDTH +: WIDTH];
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+1] = L2[i][k*2*WIDTH+WIDTH +: WIDTH];
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+2] = U1[k][j*2*WIDTH +: WIDTH];
-        complex_matrix_mul_operands_i[k*NUM_OPERANDS+3] = U1[k][j*2*WIDTH+WIDTH +: WIDTH];;  
+        complex_matrix_mul_operands_i[k*NUM_OPERANDS+3] = U1[k][j*2*WIDTH+WIDTH +: WIDTH];
         end
         
-        #1
+        #2
         complex_add_operands_i = {complex_matrix_mul_result_o, Matrix3[i][j*2*WIDTH +: 2*WIDTH]};
         @ (negedge clk_i);
         $display("%f-%f =%f",$bitstoreal(Matrix3[i][j*2*WIDTH+:WIDTH]),$bitstoreal(complex_matrix_mul_result_o[0+:WIDTH]),$bitstoreal(complex_add_result_o[0+:WIDTH]));
