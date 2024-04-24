@@ -480,7 +480,7 @@ complex_matrix_mul
 (
 .clk_i(clk_i),
 .rst_ni(rst_ni),
-.in_valid_i(complex_matrix_mul_in_valid_i),
+.in_valid_i(1'b1),
 .in_ready_o(complex_matrix_mul_in_ready_o),
 .flush_i(flush_i),
 .operands_i(complex_matrix_mul_operands_i),
