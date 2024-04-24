@@ -292,7 +292,7 @@ for (int i = 0; i < SIZE; i=i+1) begin
         Matrix3[i][j*2*WIDTH +: 2*WIDTH] = complex_add_result_o;
     end
 end
-Matrix = Matrix3;
+Matrix = Matrix0;
 
  $display("lu_ready = %d", lu_in_ready_o);
 rst_ni = 0;
@@ -304,9 +304,9 @@ lu_start = 1;
 lu_start = 0;
 $display("lu_ready = %d", lu_in_ready_o);
 
-for (int i=0; i<SIZE; i=i+1) begin
-  $display("%0h",U1[i]);
-end
+// for (int i=0; i<SIZE; i=i+1) begin
+//   $display("%0h",U1[i]);
+// end
 
 wait(lu_in_ready_o == 1);
 //#1000
