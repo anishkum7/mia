@@ -104,6 +104,14 @@ real a,b,c,d;
 
 initial begin
   $fsdbDumpvars;
+  L0 = 0;
+  L1 = 0;
+  L2 = 0;
+  L3 = 0;
+  U0 = 0;
+  U1 = 0;
+  U2 = 0;
+  U3 = 0;
   for (int i = 0; i < SIZE; i++) begin
     for (int j = 0; j < SIZE; j++) begin
       
@@ -452,7 +460,7 @@ for (int i=0; i<2*SIZE; i=i+1) begin
     a = input_mat[i][2*j];
     b = input_mat[i][2*j+1];
     $write("(%f + j%f)",a,b);
-    if (j == SIZE-1) begin
+    if (j == 2*SIZE-1) begin
       $write("\n");
     end
   end
@@ -465,7 +473,7 @@ for (int i=0; i<2*SIZE; i=i+1) begin
     a = product[i][2*j];
     b = product[i][2*j+1];
     $write("(%f + j%f)",a,b);
-    if (j == SIZE-1) begin
+    if (j == 2*SIZE-1) begin
       $write("\n");
     end
   end
