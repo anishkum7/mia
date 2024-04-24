@@ -121,7 +121,8 @@ initial begin
         a = (a-1000)/100;
 
         b = $itor($urandom_range(0,2000));
-        b = (a-1000)/100;
+        //b = (a-1000)/100;
+        b = 0;
 
         // Make sure diagonal elements are non-zero
         if (i == j && a == 0)
@@ -131,13 +132,13 @@ initial begin
         Matrix0[i][j*2*WIDTH + WIDTH-1 -: WIDTH] = $realtobits(a);
         Matrix0[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH] = $realtobits(b);
         input_mat[i][2*j] = a;
-        input_mat[i][2*j+1] = 0;//b;
+        input_mat[i][2*j+1] = b;
                 // Generate random real and imaginary parts
         a = $itor($urandom_range(0,2000));
         a = (a-1000)/100;
 
-        b = $itor($urandom_range(0,2000));
-        b = (a-1000)/100;
+        //b = $itor($urandom_range(0,2000));
+        //b = (a-1000)/100;
 
         // Make sure diagonal elements are non-zero
         if (i == j && a == 0)
@@ -147,14 +148,14 @@ initial begin
         Matrix1[i][j*2*WIDTH + WIDTH-1 -: WIDTH] = $realtobits(a);
         Matrix1[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH] = $realtobits(b);
         input_mat[i][2*(j+SIZE)] = a;
-        input_mat[i][2*(j+SIZE)+1] = 0;//b;
+        input_mat[i][2*(j+SIZE)+1] = b;
 
                 // Generate random real and imaginary parts
         a = $itor($urandom_range(0,2000));
         a = (a-1000)/100;
 
-        b = $itor($urandom_range(0,2000));
-        b = (a-1000)/100;
+        //b = $itor($urandom_range(0,2000));
+        //b = (a-1000)/100;
 
         // Make sure diagonal elements are non-zero
         if (i == j && a == 0)
@@ -164,14 +165,14 @@ initial begin
         Matrix2[i][j*2*WIDTH + WIDTH-1 -: WIDTH] = $realtobits(a);
         Matrix2[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH] = $realtobits(b);
         input_mat[i+SIZE][2*j] = a;
-        input_mat[i+SIZE][2*j+1] = 0;//b;
+        input_mat[i+SIZE][2*j+1] = b;
 
                 // Generate random real and imaginary parts
         a = $itor($urandom_range(0,2000));
         a = (a-1000)/100;
 
-        b = $itor($urandom_range(0,2000));
-        b = (a-1000)/100;
+        //b = $itor($urandom_range(0,2000));
+        //b = (a-1000)/100;
 
         // Make sure diagonal elements are non-zero
         if (i == j && a == 0)
@@ -181,7 +182,7 @@ initial begin
         Matrix3[i][j*2*WIDTH + WIDTH-1 -: WIDTH] = $realtobits(a);
         Matrix3[i][j*2*WIDTH + 2*WIDTH-1 -: WIDTH] = $realtobits(b);
         input_mat[i+SIZE][2*(j+SIZE)] = a;
-        input_mat[i+SIZE][2*(j+SIZE)+1] = 0;//b;
+        input_mat[i+SIZE][2*(j+SIZE)+1] = b;
 
 
     end
