@@ -238,7 +238,9 @@ $display("TRIANG INV 1 done");
 
 Linv = InvMatrix;
 Matrix = U;
-#5
+rst_ni = 0;
+#35
+rst_ni = 1;
 triang_inv_start = 1;
 
 #20
@@ -292,15 +294,17 @@ end
 Matrix = Matrix3;
 
  $display("lu_ready = %d", lu_in_ready_o);
-#5
+rst_ni = 0;
+#35
+rst_ni = 1;
 lu_start = 1;
 
 #20
 lu_start = 0;
  $display("lu_ready = %d", lu_in_ready_o);
 
-//@ (posedge lu_in_ready_o);
-#1000
+@ (posedge lu_in_ready_o);
+//#1000
 
 $display("lu_ready = %d", lu_in_ready_o);
 
