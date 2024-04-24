@@ -264,8 +264,8 @@ for (int i = 0; i < SIZE; i=i+1) begin
         
         end
         @ (negedge clk_i);
-        $display("%0h",complex_matrix_mul_operands_i);
-        $display("%0h",complex_matrix_mul_result_o);
+        // $display("%0h",complex_matrix_mul_operands_i);
+        // $display("%0h",complex_matrix_mul_result_o);
         U1[i][j*2*WIDTH +: 2*WIDTH] = complex_matrix_mul_result_o;
     end
 end
@@ -279,6 +279,7 @@ for (int i = 0; i < SIZE; i=i+1) begin
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+2] = Uinv[j][k*2*WIDTH +: WIDTH];
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+3] = Uinv[j][k*2*WIDTH+WIDTH +: WIDTH];;  
         end
+        @ (negedge clk_i);
         L2[i][j*2*WIDTH +: 2*WIDTH] = complex_matrix_mul_result_o;
     end
 end
@@ -293,10 +294,11 @@ for (int i = 0; i < SIZE; i=i+1) begin
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+3] = U1[k][j*2*WIDTH+WIDTH +: WIDTH];;  
         end
         complex_add_operands_i = {complex_matrix_mul_result_o, Matrix3[i][j*2*WIDTH +: 2*WIDTH]};
+        @ (negedge clk_i);
         Matrix3[i][j*2*WIDTH +: 2*WIDTH] = complex_add_result_o;
     end
 end
-Matrix = Matrix0;
+Matrix = Matrix3;
 
  $display("lu_ready = %d", lu_in_ready_o);
 rst_ni = 0;
