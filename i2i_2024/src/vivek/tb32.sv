@@ -261,8 +261,8 @@ for (int i = 0; i < SIZE; i=i+1) begin
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+1] = Linv[i][k*2*WIDTH+WIDTH +: WIDTH];
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+2] = Matrix1[k][j*2*WIDTH +: WIDTH];
         complex_matrix_mul_operands_i[k*NUM_OPERANDS+3] = Matrix1[k][j*2*WIDTH+WIDTH +: WIDTH];;  
+        $display("%0h",complex_matrix_mul_operands_i);
         end
-        $display("%0h",complex_matrix_mul_result_o);
         U1[i][j*2*WIDTH +: 2*WIDTH] = complex_matrix_mul_result_o;
     end
 end
