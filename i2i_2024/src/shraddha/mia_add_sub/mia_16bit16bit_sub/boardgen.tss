@@ -1,0 +1,9 @@
+board_system_create -haps -name Test_board
+board_system_create -add HAPS100_4F -name mb1
+
+board_system_configure -top_io {mb1.A4 mb1.A8 mb1.A9 }
+board_system_configure -voltage {mb1.A4 mb1.A8 mb1.A9 } 1.2
+
+board_system_configure -pll mb1.PLL1.CLK1 -frequency 20000 -name clk 
+board_system_configure -clock {mb1.uA.CLK1} clk
+
