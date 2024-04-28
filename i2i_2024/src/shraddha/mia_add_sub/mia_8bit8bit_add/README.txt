@@ -11,20 +11,15 @@ Versions used:  ProtoCompiler 2023.12
  
 Steps to run on host machine:
 
-1. > cd <path to your directory where the design was unzipped>
-1. > mkdir implementation_dir
-2. > cd implementation_dir
-3. > ln -s ../rom_init_hex.dat .
-4. > protocompiler100 -batch -tcl ../run_protocompiler_rom_demo.tcl
-5. > cd ..
-
-6.  > protocompiler100_runtime -shell
-
-7.  % cd implementation_dir
-8.  % confprosh
-9.  % cfg_scan
-10. % set handle [cfg_open mod-E021929]
-11. % cfg_project_configure $handle export_results/system/targetsystem.tsd
-12. % cfg_reset_set $handle FB1.uA 0
-13. % cfg_reset_set $handle FB1.uA 1
-14. source ../dynamic_rom_sp.tcl
+1. cd <path to your directory where the design was unzipped>
+1. mkdir implementation_dir
+2. cd implementation_dir
+3. ln -s ../rom_init_hex.dat .
+4. protocompiler100 -batch -tcl ../run_protocompiler_rom_demo.tcl
+5. % confprosh
+6. % cfg_scan
+7. % set handle [cfg_open mod-E021929]
+8. % cfg_project_configure $handle export_results/system/targetsystem.tsd
+9. % cfg_reset_set $handle FB1.uA 0
+10. % cfg_reset_set $handle FB1.uA 1
+11. % source ../dynamic_rom_sp.tcl
