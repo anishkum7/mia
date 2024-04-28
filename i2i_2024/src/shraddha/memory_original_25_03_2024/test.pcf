@@ -1,0 +1,28 @@
+#assign_cell u_cnt_demo_inst1 mb1.uA
+assign_cell u_cnt_demo_inst2 mb1.uA
+assign_cell u_cnt_demo_inst3 mb1.uA
+#assign_cell u_cnt_demo_inst4 mb1.uA
+assign_cell u_cnt_start_check1  mb1.uB
+assign_cell u_cnt_end_check1  mb1.uA
+assign_cell u_cnt_start_check2  mb1.uB
+assign_cell u_cnt_end_check2  mb1.uA
+
+replicate_cell u_cnt_demo_inst4 {mb1.uA mb1.uB}
+replicate_cell u_cnt_demo_inst1 {mb1.uA mb1.uB}
+net_attribute osc -function GCLK
+assign_global_net osc d_clk
+
+assign_virtual_port -port reset_n -type USR_LOCAL_RESET -bin {mb1.uA}
+reset_synchronize -net reset_n -clock osc -init 0
+
+assign_virtual_port -port reset_n1 -type USR_LOCAL_RESET -bin {mb1.uA}
+reset_synchronize -net reset_n1 -clock osc -init 0
+
+assign_virtual_port -port reset_n2 -type USR_LOCAL_RESET -bin {mb1.uA}
+reset_synchronize -net reset_n2 -clock osc -init 0
+
+assign_virtual_port -port reset_n3 -type USR_LOCAL_RESET -bin {mb1.uA}
+reset_synchronize -net reset_n3 -clock osc -init 0
+
+bin_attribute mb1.uC -locked
+bin_attribute mb1.uD -locked
