@@ -1,0 +1,1 @@
+vcs_exec_command {vcs_dut_rom_demo.csh}
