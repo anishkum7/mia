@@ -1,0 +1,10 @@
+net_attribute clk -function GCLK
+assign_global_net clk clk
+
+assign_virtual_port -port reset_n -type USR_LOCAL_RESET -bin {mb1.uA}
+reset_synchronize -net reset_n -clock clk -init 0
+
+
+bin_attribute mb1.uB -locked
+bin_attribute mb1.uC -locked
+bin_attribute mb1.uD -locked
