@@ -1,1 +1,0 @@
-simv.daidir/kdb_postelab.csh
